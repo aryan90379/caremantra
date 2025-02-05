@@ -21,6 +21,8 @@ const EditArticle = () => {
     "author",
     "category",
     "tags",
+    "featuredImage",
+    "thumbnail",
   ];
 
   const stats = [

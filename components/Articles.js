@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchArticles, CreateArticle } from "@/actions/useractions";
 import Link from "next/link";
+import Image from "next/image";
 
 // import Router, { useRouter } from "next/router";
 
@@ -42,7 +43,7 @@ const DisplayArticles = () => {
       return;
     }
     const matchedArticles = articles.filter((article) =>
-      article.title.toLowerCase().startsWith(searchTerm.toLowerCase())
+      article.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredArticles(matchedArticles);
   };
@@ -86,7 +87,22 @@ const DisplayArticles = () => {
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article, idx) => (
               <div key={idx} className="p-4 lg:w-1/3 w-full">
-                <div className="h-full bg-gray-100 dark:bg-gray-800 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative">
+                <div className="h-full   bg-opacity-75 lg:px-8 pt-8 pb-8 rounded-lg overflow-hidden text-center relative">
+                  {/* Image using Next.js Image component */}
+                  <Image
+                    alt={article.title}
+                    src={
+                      article.thumbnail || "https://via.placeholder.com/600x400"
+                    }
+                    width={600} // Set width to desired value
+                    height={400} // Set height to desired value
+                    className="h-56 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] dark:shadow-gray-700/25"
+                    priority={false} // Load image immediately for better performance
+                    placeholder="blur" // Blur-up effect while loading
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWx...eF1zdmc+PHN2ZyBkYXRhPSJldmFsbCwgM2sgcnMgc3h1cGE=" // Custom low-quality image placeholder
+                    loading="lazy" // Lazy loading for optimized performance
+                  />
+
                   <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
                     CATEGORY
                   </h2>
@@ -99,20 +115,27 @@ const DisplayArticles = () => {
                       : article.content}
                   </p>
                   <Link href={`/admin/articles/${article._id}`}>
-                    <button className="text-indigo-500 inline-flex items-center">
-                      Edit
-                      <svg
-                        className="w-4 h-4 ml-2"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14"></path>
-                        <path d="M12 5l7 7-7 7"></path>
-                      </svg>
+                    <button className="group relative inline-block overflow-hidden border border-indigo-600 rounded-lg px-8 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                      {/* Animation line on hover */}
+                      <span className="absolute inset-y-0 left-0 w-[2px] bg-indigo-600 transition-all duration-500 group-hover:w-full"></span>
+
+                      {/* Button text */}
+                      <span className="relative text-sm font-medium text-indigo-600 transition-colors duration-300 ease-in-out group-hover:text-white dark:text-indigo-400 dark:group-hover:text-white">
+                        Edit
+                        {/* SVG icon */}
+                        <svg
+                          className="w-4 h-4 ml-2 inline-block transition-transform duration-300 ease-in-out group-hover:translate-x-1 group-hover:rotate-90"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14"></path>
+                          <path d="M12 5l7 7-7 7"></path>
+                        </svg>
+                      </span>
                     </button>
                   </Link>
                 </div>

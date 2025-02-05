@@ -6,6 +6,7 @@ import "@fontsource/roboto";
 import { usePathname } from "next/navigation";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -18,6 +19,34 @@ const Navbar = () => {
   const [isBlogDropdownOpen, setIsBlogDropdownOpen] = useState(false);
   const [isInfoDropdownOpen, setIsInfoDropdownOpen] = useState(false);
   const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
+
+  const AnimatedArrow = ({ isOpen }) => {
+    return (
+      <motion.svg
+        className="w-3 h-3 ms-3 inline-block"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 10 6"
+        animate={{
+          rotate: isOpen ? 180 : 0, // Directly set target angle
+          scale: isOpen ? 1.2 : 1, // A little bounce effect
+        }}
+        transition={{
+          rotate: { duration: 0.4, ease: "easeInOut" },
+          scale: { duration: 0.3, ease: "easeInOut" },
+        }}
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="m1 1 4 4 4-4"
+        />
+      </motion.svg>
+    );
+  };
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -49,8 +78,7 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="z-20  fixed top-0 left-0 right-0  bg-white dark:bg-gray-950">
-
+      <nav className="z-20  fixed top-0 left-0 right-0  bg-white dark:bg-gray-950">
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             href="/"
@@ -182,7 +210,8 @@ const Navbar = () => {
                               {session.user.email}
                             </div>
                           </div>
-                          {status === "authenticated" && adminEmails?.includes(session?.user?.email) && (
+                          {status === "authenticated" &&
+                            adminEmails?.includes(session?.user?.email) && (
                               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                 <li>
                                   <Link
@@ -295,7 +324,6 @@ const Navbar = () => {
                     `}
                   aria-current={pathname === "/" ? "page" : undefined}
                 >
-                  
                   Home
                 </Link>
               </li>
@@ -308,7 +336,7 @@ const Navbar = () => {
               >
                 <button
                   onClick={toggleBlogDropdown}
-                  className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+                  className={`block  py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
                     ${
                       pathname === "/blogs"
                         ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
@@ -319,26 +347,12 @@ const Navbar = () => {
                   type="button"
                 >
                   <Link href={"/blogs"}>Blogs</Link>
-                  <svg
-                    className="w-3 h-3 ms-3 inline-block"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
+                  <AnimatedArrow isOpen={isBlogDropdownOpen} />
                 </button>
 
                 {isBlogDropdownOpen && (
                   <div
-                    className="absolute left-0 mt-2 z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
+                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
         backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
         animate-fadeIn"
                   >
@@ -403,26 +417,12 @@ const Navbar = () => {
                 >
                   <Link href={"/tools"}>Tools</Link>
 
-                  <svg
-                    className="w-3 h-3 ms-3 inline-block"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
+                  <AnimatedArrow isOpen={isToolsDropdownOpen} />
                 </button>
 
                 {isToolsDropdownOpen && (
                   <div
-                    className="absolute left-0 mt-2 z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
+                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
             backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
             animate-fadeIn"
                   >
@@ -462,26 +462,12 @@ const Navbar = () => {
                   type="button"
                 >
                   Info
-                  <svg
-                    className="w-3 h-3 ms-3 inline-block"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
+                  <AnimatedArrow isOpen={isInfoDropdownOpen} />
                 </button>
 
                 {isInfoDropdownOpen && (
                   <div
-                    className="absolute left-0 mt-2 z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
+                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
         backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
         animate-fadeIn"
                     onMouseLeave={() => setIsInfoDropdownOpen(false)}
