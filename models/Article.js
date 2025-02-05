@@ -3,29 +3,32 @@ const { Schema, model } = mongoose;
 
 const ArticleSchema = new Schema(
   {
-    title: { type: String, required: true, unique: true, trim: true },
-    slug: { type: String, required: true, unique: true }, // SEO-friendly URL
-    metaTitle: { type: String, required: true, trim: true }, // SEO Title (shorter than title)
-    metaDescription: { type: String, required: true, maxlength: 160 }, // SEO description
-    keywords: { type: [String], index: true }, // SEO keywords
-    content: { type: String, required: true }, // Main article content
-    author: { type: String, required: true }, // Author name
-    category: { type: String, required: true, index: true }, // Article category
-    tags: { type: [String], index: true }, // Tags for filtering and SEO
-    featuredImage: { type: String, required: true }, // Main image URL for social sharing
-    thumbnail: { type: String }, // Optional thumbnail image
-    status: { type: String, enum: ["draft", "published"], default: "draft" }, // Article status
-    views: { type: Number, default: 0 }, // View count for analytics
-    likes: { type: Number, default: 0 }, // Like count for engagement
-    comments: { type: Number, default: 0 }, // Comment count
-    readingTime: { type: Number, default: 0 }, // Estimated reading time in minutes
-    isFeatured: { type: Boolean, default: false }, // Highlighted article
-    publishedAt: { type: Date }, // Date of publication
+    title: { type: String, required: true, unique: true, trim: true, default: "Untitled Article" },
+    slug: { type: String, required: true, unique: true, default: "draft-slug" },
+    metaTitle: { type: String, required: true, trim: true, default: "Default Meta Title" },
+    metaDescription: { type: String, required: true, maxlength: 160, default: "Default Meta Description" },
+    keywords: { type: [String], index: true, default: ["default", "keywords"] },
+    content: { type: String, required: true, default: "This is the default content for the article." },
+    author: { type: String, required: true, default: "Anonymous" },
+    category: { type: String, required: true, index: true, default: "Uncategorized" },
+    tags: { type: [String], index: true, default: ["default", "tags"] },
+    featuredImage: { type: String, required: true, default: "https://example.com/default-featured-image.jpg" },
+    thumbnail: { type: String, default: "https://example.com/default-thumbnail.jpg" },
+    status: { type: String, enum: ["draft", "published"], default: "draft" },
+    views: { type: Number, default: 0 },
+    likes: { type: Number, default: 0 },
+    comments: { type: Number, default: 0 },
+    readingTime: { type: Number, default: 0 },
+    isFeatured: { type: Boolean, default: false },
+    publishedAt: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );
+
+
+
 
 // Auto-generate slug from title before saving
 ArticleSchema.pre("save", function (next) {

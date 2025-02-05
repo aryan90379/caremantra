@@ -2,7 +2,8 @@
 import { connectToDatabase } from "@/md/mongodb";
 import Article from "@/models/Article";
 import mongoose from "mongoose";
-
+import { revalidatePath } from "next/cache"; // ✅ Import for cache invalidation
+import { redirect } from "next/navigation"; 
 const { ObjectId } = mongoose.Types; // Access ObjectId from Mongoose
 
 // export const fetchArticle = async (title) => {
@@ -41,6 +42,7 @@ export const fetchArticles = async () => {
 
 //fetching articles for updating based on ther
 
+
 export const fetchArticle = async (id) => {
   try {
     await connectToDatabase();
@@ -73,7 +75,9 @@ export const updateArticle = async (data, id) => {
       throw new Error("Invalid article ID");
     }
 
-    let ndata = Object.fromEntries(Object.entries(data).filter(([_, v]) => v !== undefined)); // Remove undefined values
+    let ndata = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== undefined)
+    ); // Remove undefined values
 
     console.log("Updating article with ID:", id);
     console.log("Update data:", ndata);
@@ -107,5 +111,32 @@ export const updateArticle = async (data, id) => {
   }
 };
 
+export const CreateArticle = async (data = {}) => {
+  try {
+    await connectToDatabase();
 
+    // Ensure data is an object and filter out undefined values (if any)
+    let articleData = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== undefined)
+    );
+
+    // Create a new article instance with the provided data or defaults
+    const newArticle = new Article(articleData);
+
+    // Save the article, allowing Mongoose to apply defaults
+    const savedArticle = await newArticle.save();
+
+    console.log("New article created:", savedArticle);
+
+    // Return the ID of the created article
+      // ✅ Revalidate cache for articles list
+      revalidatePath("/admin/articles"); 
+
+      // ✅ Redirect properly using `redirect()`
+      redirect(`/admin/articles/${savedArticle._id}`);  
+  } catch (error) {
+    console.error("Error creating article:", error);
+    throw error;
+  }
+};
 
