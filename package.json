@@ -9,15 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/nunito": "^5.1.1",
+    "@fontsource/playfair-display": "^5.1.1",
+    "@fontsource/quicksand": "^5.1.1",
+    "@fontsource/roboto": "^5.1.1",
+    "caremantra": "file:",
+    "framer-motion": "^12.0.6",
+    "mongoose": "^8.9.6",
+    "motion": "^12.0.6",
+    "next": "15.1.6",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.6"
+    "react-toastify": "^11.0.3"
   },
   "devDependencies": {
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "@eslint/eslintrc": "^3",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
   }
 }
