@@ -56,7 +56,7 @@ const DisplayArticles = () => {
             <input
               type="text"
               placeholder="Search by title..."
-              className="w-full p-3 rounded-lg border text-sm transition-all duration-300
+              className="w-full p-3 rounded-full border text-sm transition-all duration-300
         border-gray-300 bg-gray-100 text-gray-800 placeholder-gray-500
         dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400
         focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400

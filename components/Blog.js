@@ -1,103 +1,151 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { fetchArticleTitle } from "@/actions/useractions";
+import { usePathname } from "next/navigation";
+import ShareButtons from "./sharedbuttons";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-const ArticleEditor = () => {
-  const [sections, setSections] = useState([]);
-  const [newSection, setNewSection] = useState({ heading: "", content: [] });
-  const [inputText, setInputText] = useState("");
-  const [contentType, setContentType] = useState("paragraph");
+const Blog = () => {
+  const pathname = usePathname();
+  const title = decodeURIComponent(pathname.split("/").pop() || "");
 
-  const addContent = () => {
-    if (!inputText.trim()) return;
+  const [article, setArticle] = useState({
+    title: "",
+    author: "",
+    publishedAt: "",
+    content: "",
+    thumbnail: "",
+  });
 
-    const newContent = { type: contentType, text: inputText };
-    if (contentType === "bullet_points") {
-      newContent.items = inputText.split(",").map((item) => item.trim());
-      delete newContent.text;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (title) {
+      getData();
     }
+  }, [title]);
 
-    setNewSection({ ...newSection, content: [...newSection.content, newContent] });
-    setInputText("");
-  };
-
-  const saveSection = () => {
-    if (!newSection.heading.trim() || newSection.content.length === 0) return;
-    setSections([...sections, newSection]);
-    setNewSection({ heading: "", content: [] });
+  const getData = async () => {
+    try {
+      const data = await fetchArticleTitle(title);
+      setArticle(data);
+    } catch (error) {
+      console.error("Error fetching article:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Dynamic Article Editor</h1>
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="lg:flex text-gray-600 dark:text-gray-300 body-font bg-white dark:bg-gray-900 min-h-screen"
+    >
+      <aside className="lg:w-1/4 lg:block hidden"></aside>
 
-      {/* Section Input */}
-      <input
-        type="text"
-        className="w-full p-2 border rounded mb-2"
-        placeholder="Section Heading"
-        value={newSection.heading}
-        onChange={(e) => setNewSection({ ...newSection, heading: e.target.value })}
-      />
-
-      {/* Content Input */}
-      <div className="flex gap-2 mb-2">
-        <select
-          className="p-2 border rounded"
-          value={contentType}
-          onChange={(e) => setContentType(e.target.value)}
+      {/* Main Content */}
+      <main className="lg:w-2/4 w-full pt-9 px-4">
+        <motion.header
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <option value="paragraph">Paragraph</option>
-          <option value="bullet_points">Bullet Points (comma-separated)</option>
-          <option value="subheading">Subheading</option>
-        </select>
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded"
-          placeholder="Enter content"
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600"
-          onClick={addContent}
+          <h1 className="text-4xl font-bold">
+            {loading ? "Loading..." : article.title}
+          </h1>
+        </motion.header>
+
+        {/* Author & Meta Info */}
+        <motion.section
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-4 text-md text-gray-500 dark:text-gray-400"
         >
-          Add
-        </button>
-      </div>
+          <p>
+            by{" "}
+            <span className="font-semibold text-gray-800 dark:text-white">
+              {article.author || "Unknown"}
+            </span>{" "}
+            in{" "}
+            <span className="font-semibold text-gray-800 dark:text-white">
+              {article.category || "General"}
+            </span>{" "}
+            category on{" "}
+            <time dateTime={article.publishedAt}>
+              {article.publishedAt
+                ? new Date(article.publishedAt).toLocaleDateString()
+                : "N/A"}
+            </time>
+            .
+          </p>
+        </motion.section>
 
-      <button
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full mb-4"
-        onClick={saveSection}
-      >
-        Save Section
-      </button>
+        {/* Share Buttons */}
+        <motion.section
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-6"
+        >
+          <ShareButtons />
+        </motion.section>
 
-      {/* Live Preview */}
-      <div className="mt-6 p-4 border rounded bg-gray-50">
-        <h2 className="text-xl font-semibold mb-2">Live Preview</h2>
-        {sections.map((section, index) => (
-          <div key={index} className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-700">{section.heading}</h2>
-            {section.content.map((content, idx) => {
-              if (content.type === "paragraph") 
-                return <p key={idx} className="text-gray-600">{content.text}</p>;
-              if (content.type === "bullet_points")
-                return (
-                  <ul key={idx} className="list-disc ml-5 text-gray-600">
-                    {content.items.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                );
-              if (content.type === "subheading")
-                return <h3 key={idx} className="text-xl font-semibold text-gray-800">{content.text}</h3>;
-              return null;
-            })}
-          </div>
-        ))}
-      </div>
-    </div>
+        {/* Article Content */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-8 text-lg leading-relaxed text-gray-700 dark:text-gray-300"
+        >
+          {loading ? (
+            <div className="animate-pulse">
+              <div className="h-64 bg-gray-300 dark:bg-gray-700 rounded-md"></div>
+              <p className="mt-4 h-4 w-3/4 bg-gray-300 dark:bg-gray-700 rounded"></p>
+              <p className="mt-2 h-4 w-1/2 bg-gray-300 dark:bg-gray-700 rounded"></p>
+            </div>
+          ) : (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                <Image
+                  src={article.thumbnail}
+                  alt={article.title}
+                  width={600}
+                  height={400}
+                  layout="responsive"
+                  objectFit="cover"
+                  priority
+                  quality={90}
+                  placeholder="blur"
+                  blurDataURL="https://placehold.co/600x400"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="rounded-lg"
+                />
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+              >
+                {article.content || "Loading article content..."}
+                
+              </motion.p>
+            </>
+          )}
+        </motion.section>
+      </main>
+      {/* Main Content */}
+
+      <aside className="lg:w-1/4 lg:block hidden"></aside>
+    </motion.article>
   );
 };
 
-export default ArticleEditor;
+export default Blog;
