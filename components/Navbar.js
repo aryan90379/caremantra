@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { motion } from "framer-motion";
+import { fetchArticles } from "@/actions/useractions";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -14,11 +15,35 @@ const Navbar = () => {
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",");
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
-
+  const [articles, setArticles] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
   const pathname = usePathname();
   const [isBlogDropdownOpen, setIsBlogDropdownOpen] = useState(false);
   const [isInfoDropdownOpen, setIsInfoDropdownOpen] = useState(false);
   const [isToolsDropdownOpen, setIsToolsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredArticles, setFilteredArticles] = useState([]);
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const data = await fetchArticles();
+    setArticles(data);
+    setFilteredArticles(data);
+  };
+
+  //search bar implementation
+  const handleSearch = () => {
+    if (searchTerm.trim() === "") {
+      setFilteredArticles(articles);
+      return;
+    }
+    const matchedArticles = articles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredArticles(matchedArticles);
+  };
 
   const AnimatedArrow = ({ isOpen }) => {
     return (
@@ -93,10 +118,11 @@ const Navbar = () => {
             />
 
             <span
+              className="text-lg md:text-[1.5rem]"
               style={{
                 fontFamily: "'roboto', serif",
                 fontWeight: "600",
-                fontSize: "1.5rem",
+                // fontSize: "1.5rem",
                 background:
                   "linear-gradient(to right, #3b82f6, #a855f7, #ec4899)",
                 WebkitBackgroundClip: "text",
@@ -164,7 +190,53 @@ const Navbar = () => {
     hover:shadow-3xl hover:shadow-pink-500/60 dark:hover:shadow-purple-600/60 
     placeholder:text-gray-400 dark:focus:ring-indigo-300 dark:focus:border-indigo-400"
                   placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value); // Update the state
+                    handleSearch(); // Trigger the search function with the new value
+                  }}
+                  onFocus={() => setIsFocused(true)} // Set focus state to true
+                  onBlur={() => setIsFocused(false)} // Set focus state to false when unfocused
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch(); // Call the same search handler used by the button
+                    }
+                  }}
                 />
+
+                {/* showing articles in search bar */}
+                {isFocused && (
+  <div className="absolute top-full mt-2 w-3/4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700">
+    {filteredArticles.length > 0 ? (
+      filteredArticles.slice(0, 10).map((article, idx) => (
+        <Link
+          href={`/admin/ahdb`}
+          key={idx}
+          className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
+          passHref
+       >
+          <Image
+            alt={article.title}
+            src={
+              article.thumbnail || "https://via.placeholder.com/50"
+            }
+            width={50}
+            height={50}
+            className="w-12 h-12 rounded-md object-cover shadow-md"
+          />
+          <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
+            {article.title}
+          </p>
+        </Link>
+      ))
+    ) : (
+      <p className="p-3 text-center text-gray-600 dark:text-gray-400">
+        No results found.
+      </p>
+    )}
+  </div>
+)}
+
 
                 {/* <div></div> */}
                 <div className="flex items-center gap-5 ">

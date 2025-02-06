@@ -103,8 +103,8 @@ const DisplayArticles = () => {
                     loading="lazy" // Lazy loading for optimized performance
                   />
 
-                  <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-                    CATEGORY
+                  <h2 className="tracking-widest text-sm title-font font-medium text-gray-400 mb-1">
+                    {article.category}
                   </h2>
                   <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 dark:text-white mb-3">
                     {article.title}

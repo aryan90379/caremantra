@@ -33,9 +33,9 @@ const DisplayBlogs = () => {
 
   return (
     <section className="text-gray-600 dark:text-gray-300 body-font bg-white dark:bg-gray-900">
-      <div className="container px-5 py-24 mx-auto">
+      <div className="container px-5 py-20  mx-auto">
         <div className="mb-4 flex flex-col md:flex-row items-center justify-center relative space-y-3 md:space-y-0">
-          <div className="flex items-center w-full md:w-1/2 lg:w-1/3 space-x-2 px-4">
+          <div className="flex pb-6 items-center w-full md:w-1/2 lg:w-1/3 space-x-2 px-4">
             <input
               type="text"
               placeholder="Search by title..."
@@ -62,7 +62,7 @@ const DisplayBlogs = () => {
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article, idx) => (
               <div key={idx} className="p-4 lg:w-1/4 w-full">
-                <Link href={`/Blogs/${article.slug}`}>
+                <Link href={`/blogs/${article.slug}`}>
                   <article className="group">
                     {/* Using Next.js Image component for optimized image handling */}
                     <Image

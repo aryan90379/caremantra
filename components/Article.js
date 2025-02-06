@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { fetchArticle, updateArticle } from "@/actions/useractions";
+import { fetchArticleID, updateArticle } from "@/actions/useractions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Bounce } from "react-toastify";
@@ -39,7 +39,7 @@ const EditArticle = () => {
   }, []);
 
   const getData = async () => {
-    let data = await fetchArticle(id);
+    let data = await fetchArticleID(id);
     setArticle(data);
   };
 

@@ -42,8 +42,8 @@ export const fetchArticles = async () => {
 
 //fetching articles for updating based on ther
 
-
-export const fetchArticle = async (id) => {
+//fetch Article byID
+export const fetchArticleID = async (id) => {
   try {
     await connectToDatabase();
 
@@ -54,6 +54,29 @@ export const fetchArticle = async (id) => {
 
     const article = await Article.findOne({ _id: new ObjectId(id) });
 
+    if (!article) {
+      throw new Error("Article not found");
+    }
+
+    // Convert Mongoose document to plain object
+    return article.toObject();
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    throw error;
+  }
+};
+
+
+//fetch Article by TITLE
+export const fetchArticleTitle = async (title) => {
+  try {
+    await connectToDatabase();
+
+    // Validate and convert ID to ObjectId
+    
+
+    const article = await Article.findOne({ slug: title });
+console.log("title se article",article)
     if (!article) {
       throw new Error("Article not found");
     }
