@@ -9,7 +9,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { fetchArticles } from "@/actions/useractions";
 
-
 const Navbar = () => {
   const { data: session, status } = useSession();
   // console.log("Session data:, navbar mein hu bhai", session);
@@ -33,10 +32,6 @@ const Navbar = () => {
     setArticles(data);
     setFilteredArticles(data);
   };
-
-
-  
-
 
   //search bar implementation
   const handleSearch = () => {
@@ -187,67 +182,66 @@ const Navbar = () => {
                   <span className="sr-only">Search icon</span>
                 </div>
                 <div>
-                <input
-                  type="text"
-                  id="search-navbar"
-                  className="block w-full rounded-full p-3 pl-12 text-sm text-gray-900 border border-gray-300  bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400 
+                  <input
+                    type="text"
+                    id="search-navbar"
+                    className="block w-full rounded-full p-3 pl-12 text-sm text-gray-900 border border-gray-300  bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400 
     focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ease-in-out 
     md:shadow-2xl dark:shadow-2xl shadow-pink-400/70 dark:shadow-purple-500/60 
     hover:shadow-3xl hover:shadow-pink-500/60 dark:hover:shadow-purple-600/60 
     placeholder:text-gray-400 dark:focus:ring-indigo-300 dark:focus:border-indigo-400"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value); // Update the state
-                    handleSearch(); // Trigger the search function with the new value
-                  }}
-                  onFocus={() => setIsFocused(true)} // Set focus state to true
-                  onBlur={() => setTimeout(() => setIsFocused(false), 500)} // Delay closing to allow click event
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value); // Update the state
+                      handleSearch(); // Trigger the search function with the new value
+                    }}
+                    onFocus={() => setIsFocused(true)} // Set focus state to true
+                    onBlur={() => setTimeout(() => setIsFocused(false), 300)} // Delay closing to allow click event
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSearch(); // Call the same search handler used by the button
+                      }
+                    }}
+                  />
 
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleSearch(); // Call the same search handler used by the button
-                    }
-                  }}
-                />
-
-                {/* showing articles in search bar */}
-                {isFocused && (
-                  <div className="absolute top-full z-[9999] mt-2 w-3/4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700">
-                    {filteredArticles.length > 0 ? (
-                      filteredArticles.slice(0, 10).map((article, idx) => (
-                        <Link
-                        href={`/blogs/${article.slug}`}
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("hey");
-                          }}
-                          className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
-                          passHref
-                        >
-                          <Image
-                            alt={article.title}
-                            src={
-                              article.thumbnail ||
-                              "https://via.placeholder.com/50"
-                            }
-                            width={50}
-                            height={50}
-                            className="w-12 h-12 rounded-md object-cover shadow-md"
-                          />
-                          <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
-                            {article.title}
-                          </p>
+                  {/* showing articles in search bar */}
+                  {isFocused && (
+                    <div className="forlarge absolute hidden lg:block  top-full z-[9999] mt-2 w-9/12 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
+                      {filteredArticles.length > 0 ? (
+                        filteredArticles.slice(0, 10).map((article, idx) => (
+                          <Link
+                            href={`/blogs/${article.slug}`}
+                            key={idx}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              console.log("hey");
+                            }}
+                            className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
+                            passHref
+                          >
+                            <Image
+                              alt={article.title}
+                              src={
+                                article.thumbnail ||
+                                "https://via.placeholder.com/50"
+                              }
+                              width={50}
+                              height={50}
+                              className="w-12 h-12 rounded-md object-cover shadow-md"
+                            />
+                            <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
+                              {article.title}
+                            </p>
                           </Link>
-                      ))
-                    ) : (
-                      <p className="p-3 text-center text-gray-600 dark:text-gray-400">
-                        No results found.
-                      </p>
-                    )}
-                  </div>
-                )}
+                        ))
+                      ) : (
+                        <p className="p-3 text-center text-gray-600 dark:text-gray-400">
+                          No results found.
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* <div></div> */}
@@ -387,12 +381,68 @@ const Navbar = () => {
                   />
                 </svg>
               </div>
-              <input
-                type="text"
-                id="search-navbar"
-                className="block w-full rounded-full p-2 ps-10 text-sm text-gray-900 border border-gray-300  bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search..."
-              />
+              <div>
+                <input
+                  type="text"
+                  id="search-navbar"
+                  className="block w-full rounded-full p-3 pl-12 text-sm text-gray-900 border border-gray-300  bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400 
+    focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-300 ease-in-out 
+    md:shadow-2xl dark:shadow-2xl shadow-pink-400/70 dark:shadow-purple-500/60 
+    hover:shadow-3xl hover:shadow-pink-500/60 dark:hover:shadow-purple-600/60 
+    placeholder:text-gray-400 dark:focus:ring-indigo-300 dark:focus:border-indigo-400"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value); // Update the state
+                    handleSearch(); // Trigger the search function with the new value
+                  }}
+                  onFocus={() => setIsFocused(true)} // Set focus state to true
+                  onBlur={() => setTimeout(() => setIsFocused(false), 300)} // Delay closing to allow click event
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch(); // Call the same search handler used by the button
+                    }
+                  }}
+                />
+
+                {/* for small devices */}
+                {isFocused && (
+                  <div className="absolute llg:hidden   top-full z-[9999] mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
+                    {filteredArticles.length > 0 ? (
+                      filteredArticles.slice(0, 10).map((article, idx) => (
+                        <Link
+                          href={`/blogs/${article.slug}`}
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("hey");
+                          }}
+                          className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
+                          passHref
+                        >
+                          <Image
+                            alt={article.title}
+                            src={
+                              article.thumbnail ||
+                              "https://via.placeholder.com/50"
+                            }
+                            width={50}
+                            height={50}
+                            className="w-12 h-12 rounded-md object-cover shadow-md"
+                          />
+                          <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
+                            {article.title}
+                          </p>
+                        </Link>
+                      ))
+                    ) : (
+                      <p className="p-3 text-center text-gray-600 dark:text-gray-400">
+                        No results found.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
               {/* Home */}
