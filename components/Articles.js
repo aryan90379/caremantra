@@ -33,7 +33,6 @@ const DisplayArticles = () => {
 
   const handleAdd = async () => {
     await CreateArticle();
-    // console.log(newId);
     // router.push("/newId")
   };
 
@@ -110,9 +109,7 @@ const DisplayArticles = () => {
                     {article.title}
                   </h1>
                   <p className="leading-relaxed mb-3">
-                    {article.content.length > 150
-                      ? `${article.content.slice(0, 150)}...`
-                      : article.content}
+                    {article.metaDescription}
                   </p>
                   <Link href={`/admin/articles/${article._id}`}>
                     <button className="group relative inline-block overflow-hidden border border-indigo-600 rounded-lg px-8 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">

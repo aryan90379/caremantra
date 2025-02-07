@@ -37,17 +37,13 @@ const Article = ({ params }) => {
  
 
   // Convert slugified title into a normal sentence
-  const slugTitle = params.title;
-  const title = slugTitle
-    .replace(/-/g, " ") // Replace dashes with spaces
-    .replace(/\b\w/, (char) => char.toUpperCase()); // Capitalize the first letter
-
+ 
   // Render the edit article component
   if (status !== "authenticated" || adminEmails?.includes(session?.user?.email)) {
     // notFound();
     return (
       <div className="text-black dark:text-white mt-10">
-        <EditArticle title={title} />
+        <EditArticle />
       </div>
     );
   }

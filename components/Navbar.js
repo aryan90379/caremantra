@@ -11,7 +11,6 @@ import { fetchArticles } from "@/actions/useractions";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  // console.log("Session data:, navbar mein hu bhai", session);
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",");
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -215,7 +214,6 @@ const Navbar = () => {
                             key={idx}
                             onClick={(e) => {
                               e.stopPropagation();
-                              console.log("hey");
                             }}
                             className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
                             passHref
@@ -415,7 +413,6 @@ const Navbar = () => {
                           key={idx}
                           onClick={(e) => {
                             e.stopPropagation();
-                            console.log("hey");
                           }}
                           className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
                           passHref

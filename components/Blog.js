@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import ShareButtons from "./sharedbuttons";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import ParseContent from "./ParseContent";
 
 const Blog = () => {
   const pathname = usePathname();
@@ -17,6 +18,9 @@ const Blog = () => {
     content: "",
     thumbnail: "",
   });
+
+  // parsing the content
+
 
   const [loading, setLoading] = useState(true);
 
@@ -122,21 +126,21 @@ const Blog = () => {
                   layout="responsive"
                   objectFit="cover"
                   priority
-                  quality={90}
+                  quality={100}
                   placeholder="blur"
                   blurDataURL="https://placehold.co/600x400"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="rounded-lg"
                 />
               </motion.div>
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
               >
-                {article.content || "Loading article content..."}
                 
-              </motion.p>
+                <ParseContent value={article.content} />
+              </motion.div>
             </>
           )}
         </motion.section>

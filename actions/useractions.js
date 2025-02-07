@@ -22,7 +22,6 @@ const { ObjectId } = mongoose.Types; // Access ObjectId from Mongoose
 
 //       return article;
 //     } catch (error) {
-//       console.error("Error fetching article:", error);
 //       throw error;
 //     }
 //   };
@@ -30,10 +29,8 @@ const { ObjectId } = mongoose.Types; // Access ObjectId from Mongoose
 export const fetchArticles = async () => {
   await connectToDatabase();
   let articles = await Article.find({});
-  // console.log(articles)
-  return articles.map((article) =>
-    article.toObject({ flattenObjectIds: true })
-  );
+  return articles.map((article) => JSON.parse(JSON.stringify(article)));
+
 };
 
 // export const updateArticle = async()=>{
@@ -59,7 +56,8 @@ export const fetchArticleID = async (id) => {
     }
 
     // Convert Mongoose document to plain object
-    return article.toObject();
+    return JSON.parse(JSON.stringify(article));
+
   } catch (error) {
     console.error("Error fetching article:", error);
     throw error;
@@ -76,13 +74,13 @@ export const fetchArticleTitle = async (title) => {
     
 
     const article = await Article.findOne({ slug: title });
-console.log("title se article",article)
     if (!article) {
       throw new Error("Article not found");
     }
 
     // Convert Mongoose document to plain object
-    return article.toObject();
+    return JSON.parse(JSON.stringify(article));
+
   } catch (error) {
     console.error("Error fetching article:", error);
     throw error;
@@ -102,8 +100,7 @@ export const updateArticle = async (data, id) => {
       Object.entries(data).filter(([_, v]) => v !== undefined)
     ); // Remove undefined values
 
-    console.log("Updating article with ID:", id);
-    console.log("Update data:", ndata);
+   
 
     const article = await Article.findById(id); // Fetch the article by its ID
 
@@ -125,7 +122,6 @@ export const updateArticle = async (data, id) => {
     // Save the updated article, triggering the pre-save middleware
     const result = await article.save(); // This will trigger the save hook
 
-    console.log("Updated article:", result);
 
     return true;
   } catch (error) {
@@ -149,7 +145,6 @@ export const CreateArticle = async (data = {}) => {
     // Save the article, allowing Mongoose to apply defaults
     const savedArticle = await newArticle.save();
 
-    console.log("New article created:", savedArticle);
 
     // Return the ID of the created article
       // ✅ Revalidate cache for articles list
