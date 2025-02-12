@@ -6,6 +6,8 @@ import ShareButtons from "./sharedbuttons";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ParseContent from "./ParseContent";
+import Comments from "./Comments";
+import EditMessage from "./Editmessage";
 
 const Blog = () => {
   const pathname = usePathname();
@@ -20,7 +22,6 @@ const Blog = () => {
   });
 
   // parsing the content
-
 
   const [loading, setLoading] = useState(true);
 
@@ -40,14 +41,17 @@ const Blog = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <motion.article
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="lg:flex text-gray-600 dark:text-gray-300 body-font bg-white dark:bg-gray-900 min-h-screen"
+      className="lg:flex text-gray-600  dark:text-gray-300 body-font min-h-screen"
     >
+      
+      
       <aside className="lg:w-1/4 lg:block hidden"></aside>
 
       {/* Main Content */}
@@ -137,13 +141,23 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
+                className="p-3"
               >
-                
                 <ParseContent value={article.content} />
               </motion.div>
             </>
           )}
         </motion.section>
+        <div>
+          <h1 className="text-3xl p-11 font-bold text-gray-800 dark:text-gray-300 mt-8 mb-4 border-gray-300 dark:border-gray-600 pb-2">
+            Discussions (
+            {Array.isArray(article.comments) ? article.comments.length : 0})
+          </h1>
+
+          <EditMessage />
+          <Comments commentData={article.comments || []} title = {article.slug}/>
+        </div>
+        {/* </motion.section> */}
       </main>
       {/* Main Content */}
 

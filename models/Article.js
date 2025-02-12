@@ -3,21 +3,67 @@ const { Schema, model } = mongoose;
 
 const ArticleSchema = new Schema(
   {
-    title: { type: String, required: true, unique: true, trim: true, default: "Untitled Article" },
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      default: "Untitled Article",
+    },
     slug: { type: String, required: true, unique: true, default: "draft-slug" },
-    metaTitle: { type: String, required: true, trim: true, default: "Default Meta Title" },
-    metaDescription: { type: String, required: true, maxlength: 160, default: "Default Meta Description" },
+    metaTitle: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "Default Meta Title",
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+      maxlength: 160,
+      default: "Default Meta Description",
+    },
     keywords: { type: [String], index: true, default: ["default", "keywords"] },
-    content: { type: String, required: true, default: "This is the default content for the article." },
+    content: {
+      type: String,
+      required: true,
+      default: "This is the default content for the article.",
+    },
     author: { type: String, required: true, default: "Anonymous" },
-    category: { type: String, required: true, index: true, default: "Uncategorized" },
+    category: {
+      type: String,
+      required: true,
+      index: true,
+      default: "Uncategorized",
+    },
     tags: { type: [String], index: true, default: ["default", "tags"] },
-    featuredImage: { type: String, required: true, default: "https://example.com/default-featured-image.jpg" },
-    thumbnail: { type: String, default: "https://example.com/default-thumbnail.jpg" },
+    featuredImage: {
+      type: String,
+      required: true,
+      default: "https://example.com/default-featured-image.jpg",
+    },
+    thumbnail: {
+      type: String,
+      default: "https://example.com/default-thumbnail.jpg",
+    },
     status: { type: String, enum: ["draft", "published"], default: "draft" },
     views: { type: Number, default: 0 },
     likes: { type: Number, default: 0 },
-    comments: { type: Number, default: 0 },
+    comments: {
+      type: [
+        {
+          by_user: { type: String, required: true },
+          parentId: { type: String, default: null }, // Remove `required: true`
+          childId: { type: String, default: null }, // Remove `required: true`
+          onDate: { type: Date, required: true },
+          content: { type: String, required: true },
+          profile: { type: String, required: true }, // User profile image URL
+          // Unique identifier for each comment
+        },
+      ],
+      default: [],
+    },
+
     readingTime: { type: Number, default: 0 },
     isFeatured: { type: Boolean, default: false },
     publishedAt: { type: Date, default: null },
@@ -26,9 +72,6 @@ const ArticleSchema = new Schema(
   },
   { timestamps: true }
 );
-
-
-
 
 // Auto-generate slug from title before saving
 ArticleSchema.pre("save", function (next) {

@@ -8,6 +8,7 @@ import ThemeToggleButton from "./ThemeToggleButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { fetchArticles } from "@/actions/useractions";
+import Breadcrumb from "./BreadCrumb";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -102,7 +103,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="z-20  fixed top-0 left-0 right-0  bg-white dark:bg-gray-950">
+      <nav className="z-20  fixed top-0 left-0 right-0 max-h-fit bg-white dark:bg-gray-950">
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link
             href="/"
@@ -629,6 +630,7 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
+        <Breadcrumb />
       </nav>
     </>
   );

@@ -144,7 +144,7 @@ const DisplayBlogs = () => {
                           variants={fadeIn}
                         >
                           <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {article.author} | {article.readingTime}  min read | {(article.publishedAt).slice(0,10)} 
+                          {article?.author || "Unknown"} | {article?.readingTime || "N/A"} min read | {article?.publishedAt?.slice(0, 10) || "Unknown Date"}
                           </span>
                         </motion.div>
                       </div>

@@ -25,7 +25,7 @@ const BlockRenderer = ({ block }) => {
 
   switch (type) {
     case "h1":
-      return <h1 className={`text-3xl font-bold border-b pb-2 ${color}`}>{content}</h1>;
+      return <h1 className={`text-3xl font-bold  pb-2 ${color}`}>{content}</h1>;
 
     case "h2":
       return <h2 className={`text-2xl font-semibold pb-2 ${color}`}>{content}</h2>;
@@ -102,7 +102,7 @@ const ParseContent = ({ value }) => {
   const blocks = parseContent(value);
 
   return (
-    <div className="w-full rounded-lg shadow-lg py-4 bg-gray-50 dark:bg-gray-900 space-y-4">
+    <div className="w-full rounded-lg  py-4  space-y-4">
       {blocks.map((block, index) => (
         <AnimatedBlock key={index} block={block} />
       ))}

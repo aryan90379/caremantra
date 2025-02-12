@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SessionWrapper from "@/components/SessionWrapper";
-
+import Footer from "@/components/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -34,10 +34,12 @@ export default function RootLayout({ children }) {
           <div className=" hidden dark:block absolute top-0 z-[-2] h-full w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
             {children}
           </div> */}
+
+          <div className="pt-[7rem]">{children}</div>
+          {/* </div> */}
           
 
-          {children}
-          {/* </div> */}
+          <Footer />
         </SessionWrapper>
       </body>
     </html>

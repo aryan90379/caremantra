@@ -43,7 +43,7 @@ const EditArticle = () => {
     { name: "Slug", icon: <FaLink />, value: article.slug },
     { name: "Views", icon: <FaEye />, value: article.views },
     { name: "Likes", icon: <FaHeart />, value: article.likes },
-    { name: "Comments", icon: <FaComments />, value: article.comments },
+    // { name: "Comments", icon: <FaComments />, value: article.comments.length },
     { name: "Created At", icon: <FaCalendarAlt />, value: article.createdAt },
     { name: "Updated At", icon: <FaSync />, value: article.updatedAt },
     { name: "Published At", icon: <FaRocket />, value: article.publishedAt },
@@ -209,53 +209,52 @@ const EditArticle = () => {
 
         {/* Static Fields Sidebar */}
         <div className="bg-white mt-20 dark:bg-gray-900 p-6 rounded-xl shadow-md border border-gray-300 dark:border-gray-700 space-y-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
-            Article Stats
-          </h2>
-          {stats.map(({ name, icon, value, isPositive, percentage }) => (
-            <div
-              key={name}
-              className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
-              <span className="text-xl">{icon}</span>
-              <div className="text-right">
-                <label className="block text-sm font-semibold text-gray-700 dark:text-gray-400">
-                  {name}
-                </label>
-                <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
-                  {value || "N/A"}
-                </p>
-              </div>
-              <div
-                className={`inline-flex gap-2 rounded-sm p-1 text-xs font-medium ${
-                  isPositive
-                    ? "bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-50"
-                    : "bg-red-100 text-red-600 dark:bg-red-700 dark:text-red-50"
-                }`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="size-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d={
-                      isPositive
-                        ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                        : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-                    }
-                  />
-                </svg>
-                <span>{percentage || "0%"}</span>
-              </div>
-            </div>
-          ))}
+  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white text-center">
+    Article Stats
+  </h2>
+  {stats.map(({ name, icon, value, isPositive, percentage }) => (
+    <div
+      key={name}
+      className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+    >
+      <div className="flex items-center gap-4">
+        <span className="text-2xl">{icon}</span>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+            {name}
+          </label>
+          <p className="text-base font-medium text-gray-900 dark:text-gray-100">
+            {value || "N/A"}
+          </p>
         </div>
+      </div>
+      <div
+        className={`inline-flex items-center gap-2 rounded-sm px-2 py-1 text-xs font-medium ${
+          isPositive
+            ? "bg-green-100 text-green-600 dark:bg-green-700 dark:text-green-50"
+            : "bg-red-100 text-red-600 dark:bg-red-700 dark:text-red-50"
+        }`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d={isPositive ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"}
+          />
+        </svg>
+        <span>{percentage || "0%"}</span>
+      </div>
+    </div>
+  ))}
+</div>
+
       </div>
     </>
   );
