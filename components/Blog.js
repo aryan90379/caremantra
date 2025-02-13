@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import ParseContent from "./ParseContent";
 import Comments from "./Comments";
 import EditMessage from "./Editmessage";
-
+import Right from "./Right";
 const Blog = () => {
   const pathname = usePathname();
   const title = decodeURIComponent(pathname.split("/").pop() || "");
@@ -52,10 +52,12 @@ const Blog = () => {
     >
       
       
-      <aside className="lg:w-1/4 lg:block hidden"></aside>
+      <aside className="lg:w-1/4 lg:block hidden">
+
+      </aside>
 
       {/* Main Content */}
-      <main className="lg:w-2/4 w-full pt-9 px-4">
+      <main className="lg:w-2/4 w-full pt-9 px-4  ">
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,7 +151,7 @@ const Blog = () => {
           )}
         </motion.section>
         <div>
-          <h1 className="text-3xl p-11 font-bold text-gray-800 dark:text-gray-300 mt-8 mb-4 border-gray-300 dark:border-gray-600 pb-2">
+          <h1 className="text-3xl  font-bold text-gray-800 dark:text-gray-300 mt-8 mb-4 border-gray-300 dark:border-gray-600 pb-2">
             Discussions (
             {Array.isArray(article.comments) ? article.comments.length : 0})
           </h1>
@@ -161,7 +163,9 @@ const Blog = () => {
       </main>
       {/* Main Content */}
 
-      <aside className="lg:w-1/4 lg:block hidden"></aside>
+      <aside className="lg:w-1/4 lg:block hidden">
+      <Right/>
+      </aside>
     </motion.article>
   );
 };

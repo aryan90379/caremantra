@@ -16,7 +16,7 @@ const Breadcrumb = () => {
     }));
 
   return (
-    <nav className="flex p-3" aria-label="Breadcrumb"> {/* Add consistent padding */}
+    <nav className="flex px-7 pb-1" aria-label="Breadcrumb"> {/* Add consistent padding */}
       <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
         <li className="inline-flex items-center">
           <Link

@@ -65,9 +65,9 @@ const ChatBubble = ({
               />
               {name.split("@")[0]}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            {/* <p className="text-sm text-gray-600 dark:text-gray-400">
               <time dateTime={time}>{time || "Just now"}</time>
-            </p>
+            </p> */}
           </div>
 
           {status === "authenticated" && session.user.email === name && (
@@ -89,7 +89,7 @@ const ChatBubble = ({
 
         <p className="text-gray-500 dark:text-gray-400">{message}</p>
 
-        <div className="flex items-center mt-4 space-x-4">
+        <div className="flex justify-between  items-center mt-4 space-x-4">
           <button
             type="button"
             onClick={() => setReplying(!replying)}
@@ -111,6 +111,9 @@ const ChatBubble = ({
             </svg>
             Reply
           </button>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+              <time dateTime={time}>{time || "Just now"}</time>
+            </p>
         </div>
       </article>
 

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <section className="relative w-full md:h-screen h-96 bg-gray-700 bg-blend-multiply overflow-hidden">
       {/* Video Background */}
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
@@ -16,10 +16,9 @@ export default function Home() {
       ></video>
 
       {/* Overlay Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full bg-black bg-opacity-50 dark:bg-gray-900 dark:bg-opacity-70">
-        {/* Hero Section */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white bg-black bg-opacity-50">
         <motion.h1
-          className="text-3xl md:text-5xl font-bold text-gray-200 text-center tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+          className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -28,44 +27,54 @@ export default function Home() {
         </motion.h1>
 
         <motion.p
-          className="mt-4 text-lg md:text-xl text-gray-300 dark:text-gray-400 text-center max-w-2xl"
+          className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2 }}
         >
-          Engage with inspiring stories, explore top health tips, and stay
-          informed with our curated daily health updates.
+          Engage with inspiring stories, explore top health tips, and stay informed with our curated daily health updates.
         </motion.p>
 
-        {/* Explore Buttons */}
-        <div className="mt-8 flex gap-6">
-          {/* Button for Blogs */}
+        {/* Buttons */}
+        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+          {/* Explore Blogs Button */}
           <motion.a
             href="/blogs"
-            className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+            className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.4 }}
           >
-            <span className="relative px-6 py-3 transition-all ease-in duration-200 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent">
-              Explore Blogs
-            </span>
+            Explore Blogs
+            <svg
+              className="w-3.5 h-3.5 ml-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
           </motion.a>
 
-          {/* Button for Daily Health */}
+          {/* Explore Daily Health Button */}
           <motion.a
             href="/daily-health"
-            className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+            className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ml-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.4 }}
           >
-            <span className="relative px-6 py-3 transition-all ease-in duration-200 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent">
-              Explore Daily Health
-            </span>
+            Explore Daily Health
           </motion.a>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

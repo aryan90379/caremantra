@@ -23,7 +23,7 @@ const Right = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="p-6 bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-xl backdrop-blur-md border border-gray-200 dark:border-gray-700"
+        className="p-6 bg-white/90 dark:bg-gray-900 rounded-2xl shadow-xl backdrop-blur-md border border-gray-200 dark:border-gray-700"
       >
         {/* Heading */}
         <motion.h2

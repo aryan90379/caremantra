@@ -27,6 +27,62 @@ const Navbar = () => {
     getData();
   }, []);
 
+  const renderInfoDropdown = () => (
+    <ul className="md:py-2  text-xl md:text-sm text-gray-900 dark:text-gray-200">
+      {["About", "Privacy Policy", "Terms of Service", "Cookie Policy"].map(
+        (item) => (
+          <li key={item}>
+            <a
+              href="#"
+              className="block px-4 py-2 rounded-md transition-all duration-200 
+              hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+              dark:hover:from-gray-700 dark:hover:to-gray-800 
+              hover:text-white dark:hover:text-gray-100"
+            >
+              {item}
+            </a>
+          </li>
+        )
+      )}
+    </ul>
+  );
+
+  const renderToolsDropdown = () => (
+    <ul className="py-2 text-xl font-medium pl-8  md:pl-0  md:text-sm text-gray-900 dark:text-gray-200">
+      {["Tool 1", "Tool 2", "Tool 3"].map((item) => (
+        <li key={item}>
+          <a
+            href="#"
+            className="block px-4 py-2 rounded-md transition-all duration-200 
+            hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+            dark:hover:from-gray-700 dark:hover:to-gray-800 
+            hover:text-white dark:hover:text-gray-100"
+          >
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const renderBlogDropdown = () => (
+    <ul className="py-2  text-xl font-medium pl-8 md:text-sm md:pl-0 text-gray-900 dark:text-gray-200">
+      {["Alpha", "Beta", "Gamma"].map((item) => (
+        <li key={item}>
+          <a
+            href="#"
+            className="block px-4 py-2 rounded-md transition-all duration-200 
+            hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+            dark:hover:from-gray-700 dark:hover:to-gray-800 
+            hover:text-white dark:hover:text-gray-100"
+          >
+            {item}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+
   const getData = async () => {
     const data = await fetchArticles();
     setArticles(data);
@@ -111,17 +167,22 @@ const Navbar = () => {
           >
             <Image
               src="/logo.jpg"
-              className="h-8 invert dark:invert-0"
+              className=" invert dark:invert-0"
               alt="Flowbite Logo"
-              width={32}
-              height={32}
+              width={26}
+              height={26}
             />
+
+            <style>
+              @import
+              url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Noto+Sans+JP:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+            </style>
 
             <span
               className="text-lg md:text-[1.5rem]"
               style={{
-                fontFamily: "'roboto', serif",
-                fontWeight: "600",
+                fontFamily: "'Noto Sans JP', serif",
+                fontWeight: "900",
                 // fontSize: "1.5rem",
                 background:
                   "linear-gradient(to right, #3b82f6, #a855f7, #ec4899)",
@@ -283,8 +344,8 @@ const Navbar = () => {
                         >
                           <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             {/* <div>{username}</div> */}
-                            <div className="font-medium truncate">
-                              {session.user.email}
+                            <div className="font-medium  truncate">
+                              {session.user.email.split('@')[0]}
                             </div>
                           </div>
                           {status === "authenticated" &&
@@ -442,7 +503,7 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
               {/* Home */}
               <li>
                 <Link
@@ -468,47 +529,34 @@ const Navbar = () => {
               >
                 <button
                   onClick={toggleBlogDropdown}
-                  className={`block  py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
-                    ${
-                      pathname === "/blogs"
-                        ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
-                        : "text-gray-800 dark:text-gray-200"
-                    } 
-                    
-                    `}
+                  className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+      ${
+        pathname === "/blogs"
+          ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+          : "text-gray-800 dark:text-gray-200"
+      }`}
                   type="button"
                 >
                   <Link href={"/blogs"}>Blogs</Link>
                   <AnimatedArrow isOpen={isBlogDropdownOpen} />
                 </button>
 
+                {/* Dropdown inside "Blogs" (For md and larger) */}
                 {isBlogDropdownOpen && (
                   <div
-                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
-        backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
-        animate-fadeIn"
+                    className="absolute left-0 z-10 w-48 bg-white dark:bg-gray-950 rounded-lg md:shadow-lg 
+      backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
+      animate-fadeIn hidden md:block"
                   >
-                    <ul
-                      className="py-2 text-sm text-gray-900 dark:text-gray-200"
-                      onMouseLeave={() => setIsBlogDropdownOpen(false)}
-                    >
-                      {["Alpha", "Beta", "Gamma"].map((item) => (
-                        <li key={item}>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 rounded-md transition-all duration-200 
-                hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
-                dark:hover:from-gray-700 dark:hover:to-gray-800 
-                hover:text-white dark:hover:text-gray-100"
-                          >
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    {renderBlogDropdown()}
                   </div>
                 )}
               </li>
+
+              {/* Dropdown appended after "Blogs" (For small screens) */}
+              {isBlogDropdownOpen && (
+                <li className="md:hidden ">{renderBlogDropdown()}</li>
+              )}
 
               {/* Daily Health */}
               <li>
@@ -527,110 +575,79 @@ const Navbar = () => {
               </li>
 
               {/* Tools */}
+              {/* Tools List Item */}
               <li
                 className="relative group"
-                onMouseEnter={() => {
-                  setIsToolsDropdownOpen(true);
-                }}
-                onMouseLeave={() => {
-                  setIsToolsDropdownOpen(false);
-                }}
+                onMouseEnter={() => setIsToolsDropdownOpen(true)}
+                onMouseLeave={() => setIsToolsDropdownOpen(false)}
               >
                 <button
                   onClick={toggleToolsDropdown}
                   className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
-                      ${
-                        pathname === "/tools"
-                          ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
-                          : "text-gray-800 dark:text-gray-200"
-                      } 
-                      `}
+      ${
+        pathname === "/tools"
+          ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+          : "text-gray-800 dark:text-gray-200"
+      }`}
                   type="button"
                 >
                   <Link href={"/tools"}>Tools</Link>
-
                   <AnimatedArrow isOpen={isToolsDropdownOpen} />
                 </button>
 
+                {/* Dropdown inside "Tools" (For md and larger) */}
                 {isToolsDropdownOpen && (
                   <div
-                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
-            backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
-            animate-fadeIn"
+                    className="absolute left-0 z-10 w-48 bg-white dark:bg-gray-950 rounded-lg md:shadow-lg 
+      backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
+      animate-fadeIn hidden md:block"
                   >
-                    <ul
-                      className="py-2 text-sm text-gray-900 dark:text-gray-200"
-                      onMouseLeave={() => setIsToolsDropdownOpen(false)}
-                    >
-                      {["Tool 1", "Tool 2", "Tool 3"].map((item) => (
-                        <li key={item}>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 rounded-md transition-all duration-200 
-                    hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
-                    dark:hover:from-gray-700 dark:hover:to-gray-800 
-                    hover:text-white dark:hover:text-gray-100"
-                          >
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    {renderToolsDropdown()}
                   </div>
                 )}
               </li>
 
+              {/* Dropdown appended after "Tools" (For small screens) */}
+              {isToolsDropdownOpen && (
+                <li className="md:hidden">{renderToolsDropdown()}</li>
+              )}
+
               {/* Info with Dropdown */}
+              {/* Info List Item */}
               <li
-                className="relative group"
+                className="relative group hidden md:block"
                 onMouseEnter={() => setIsInfoDropdownOpen(true)}
                 onMouseLeave={() => setIsInfoDropdownOpen(false)}
               >
                 <button
                   onClick={toggleInfoDropdown}
                   className="text-xl font-semibold block py-3 px-4 rounded-md transition-all duration-300 
-  text-gray-900 dark:text-gray-100 
-  "
+      text-gray-900 dark:text-gray-100"
                   type="button"
                 >
                   Info
                   <AnimatedArrow isOpen={isInfoDropdownOpen} />
                 </button>
 
+                {/* Dropdown inside "Info" (For md and larger) */}
                 {isInfoDropdownOpen && (
                   <div
-                    className="absolute left-0  z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
-        backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
-        animate-fadeIn"
-                    onMouseLeave={() => setIsInfoDropdownOpen(false)}
+                    className="absolute left-0 z-10 w-48 bg-white dark:bg-gray-900 rounded-lg md:shadow-lg 
+      backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
+      animate-fadeIn hidden md:block"
                   >
-                    <ul className="py-2 text-sm text-gray-900 dark:text-gray-200">
-                      {[
-                        "About",
-                        "Privacy Policy",
-                        "Terms of Service",
-                        "Cookie Policy",
-                      ].map((item) => (
-                        <li key={item}>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 rounded-md transition-all duration-200 
-                hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
-                dark:hover:from-gray-700 dark:hover:to-gray-800 
-                hover:text-white dark:hover:text-gray-100"
-                          >
-                            {item}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    {renderInfoDropdown()}
                   </div>
                 )}
               </li>
+
+              {<li className="md:hidden">{renderInfoDropdown()}</li>}
             </ul>
           </div>
         </div>
-        <Breadcrumb />
+        <div className={`  ${isNavOpen ? "hidden" : "block"}`}>
+          <Breadcrumb />
+        </div>
       </nav>
     </>
   );

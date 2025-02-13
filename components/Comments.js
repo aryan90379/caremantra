@@ -17,13 +17,13 @@ const formatDate = (date) => {
 
 const Comments = ({ commentData, title }) => {
   const [expandedReplies, setExpandedReplies] = useState({});
-  const [visibleComments, setVisibleComments] = useState(10);
+  const [visibleComments, setVisibleComments] = useState(5);
 
   if (!commentData || commentData.length === 0)
     return <p className="text-gray-500">No comments yet.</p>;
 
   const loadMoreComments = () => {
-    setVisibleComments((prev) => prev + 10);
+    setVisibleComments((prev) => prev + 5);
   };
 
   return (
