@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion, LazyMotion, domAnimation } from "framer-motion";
+import DisplayBlogs from "./Blogs";
 
 const categories = [
   { name: "Mental Health", icon: "🧠" },
@@ -23,7 +24,7 @@ const Right = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="p-6 bg-white/90 dark:bg-gray-900 rounded-2xl shadow-xl backdrop-blur-md border border-gray-200 dark:border-gray-700"
+        className="p-6 bg-white/90 dark:bg-gray-900 rounded-2xl  backdrop-blur-md  border-gray-200 dark:border-gray-700"
       >
         {/* Heading */}
         <motion.h2
@@ -62,6 +63,16 @@ const Right = () => {
             </motion.li>
           ))}
         </ul>
+        <motion.h2
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="text-3xl font-bold pl-5 pt-6 text-gray-900 dark:text-white mb-5 tracking-wide"
+        >
+          Related Articles
+        </motion.h2>
+
+        <DisplayBlogs aside = {true}/>
       </motion.aside>
     </LazyMotion>
   );

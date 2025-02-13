@@ -14,8 +14,8 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 w-full">
-      <div className="mx-auto max-w-screen-xl space-y-8  px-4 pt-10 pb-5 sm:px-6  lg:px-8">
+    <footer className="bg-white dark:bg-gray-950 w-full">
+      <div className="mx-auto max-w-screen-xl space-y-8  px-4 pt-16 pb-5 sm:px-6  lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <motion.div

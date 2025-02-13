@@ -57,7 +57,7 @@ const Blog = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="lg:w-2/4 w-full pt-9 px-4  ">
+      <main className="lg:w-3/4 w-full pt-9 px-4  ">
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
