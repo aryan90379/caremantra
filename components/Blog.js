@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { fetchArticleTitle } from "@/actions/useractions";
 import { usePathname } from "next/navigation";
 import ShareButtons from "./sharedbuttons";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import ParseContent from "./ParseContent";
 import Comments from "./Comments";
@@ -41,7 +40,6 @@ const Blog = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <motion.article
@@ -50,14 +48,10 @@ const Blog = () => {
       transition={{ duration: 0.8 }}
       className="lg:flex text-gray-600  dark:text-gray-300 body-font min-h-screen"
     >
-      
-      
-      <aside className="lg:w-1/4 lg:block hidden">
-
-      </aside>
+      <aside className="lg:w-1/4  lg:block hidden"></aside>
 
       {/* Main Content */}
-      <main className="lg:w-3/4 w-full pt-9 px-4  ">
+      <main className="lg:w-3/4 w-full pt-9 px-3 md:px-12  ">
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,26 +118,28 @@ const Blog = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <Image
+                <img
                   src={article.thumbnail}
                   alt={article.title}
-                  width={600}
-                  height={400}
-                  layout="responsive"
-                  objectFit="cover"
-                  priority
-                  quality={100}
-                  placeholder="blur"
-                  blurDataURL="https://placehold.co/600x400"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  width={400}
+                  height={200}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "auto",
+                  }}
                   className="rounded-lg"
+                  loading="lazy"
+                  placeholder="blurred"
+                  srcSet={`${article.thumbnail} 1x, ${article.thumbnail} 2x`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="p-3"
+                className=""
               >
                 <ParseContent value={article.content} />
               </motion.div>
@@ -157,14 +153,14 @@ const Blog = () => {
           </h1>
 
           <EditMessage />
-          <Comments commentData={article.comments || []} title = {article.slug}/>
+          <Comments commentData={article.comments || []} title={article.slug} />
         </div>
         {/* </motion.section> */}
       </main>
       {/* Main Content */}
 
       <aside className="lg:w-1/4 lg:block hidden">
-      <Right/>
+        <Right />
       </aside>
     </motion.article>
   );

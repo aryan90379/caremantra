@@ -54,15 +54,16 @@ const ChatBubble = ({
         <footer className="flex justify-between items-center mb-2">
           <div className="flex items-center">
             <p className="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white">
-              <Image
-                className="mr-2 w-6 h-6 rounded-full object-cover"
+              <img
+                class="mr-2 w-6 h-6 rounded-full object-cover"
                 src={avatar || "/profileplace.jpg"}
                 alt={`${name}'s avatar`}
-                width={24}
-                height={24}
-                priority
-                quality={100}
+                width="24"
+                height="24"
+                loading="lazy"
+                onError={() => console.error("Image failed to load:", avatar)}
               />
+
               {name.split("@")[0]}
             </p>
             {/* <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -112,8 +113,8 @@ const ChatBubble = ({
             Reply
           </button>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-              <time dateTime={time}>{time || "Just now"}</time>
-            </p>
+            <time dateTime={time}>{time || "Just now"}</time>
+          </p>
         </div>
       </article>
 

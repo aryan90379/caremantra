@@ -1,10 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 
 // Helper function to parse content
 const parseContent = (content) => {
-  const regex = /<block type="(.*?)"(?: color="(.*?)")?><!\[CDATA\[(.*?)\]\]><\/block>/gs;
+  const regex =
+    /<block type="(.*?)"(?: color="(.*?)")?><!\[CDATA\[(.*?)\]\]><\/block>/gs;
   const blocks = [];
   let match;
 
@@ -28,7 +29,9 @@ const BlockRenderer = ({ block }) => {
       return <h1 className={`text-3xl font-bold  pb-2 ${color}`}>{content}</h1>;
 
     case "h2":
-      return <h2 className={`text-2xl font-semibold pb-2 ${color}`}>{content}</h2>;
+      return (
+        <h2 className={`text-2xl font-semibold pb-2 ${color}`}>{content}</h2>
+      );
 
     case "h3":
       return <h3 className={`text-xl font-medium pb-2 ${color}`}>{content}</h3>;
@@ -50,13 +53,11 @@ const BlockRenderer = ({ block }) => {
 
     case "image":
       return content ? (
-        <div className="relative w-full h-64 my-4">
-          <Image
+        <div className="relative w-full h-full   my-4">
+          <img
             src={content}
             alt="Image"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg shadow-lg"
+            class="w-full h-full object-cover rounded-lg shadow-lg"
             onError={() => console.error("Image failed to load:", content)}
           />
         </div>
@@ -66,7 +67,9 @@ const BlockRenderer = ({ block }) => {
 
     case "code":
       return (
-        <pre className={`bg-gray-900 text-green-400 font-mono p-4 rounded-lg overflow-x-auto shadow-lg ${color}`}>
+        <pre
+          className={`bg-gray-900 text-green-400 font-mono p-4 rounded-lg overflow-x-auto shadow-lg ${color}`}
+        >
           <code>{content}</code>
         </pre>
       );
@@ -96,7 +99,11 @@ const AnimatedBlock = ({ block }) => {
 // Main ParseContent component
 const ParseContent = ({ value }) => {
   if (!value) {
-    return <div className="text-gray-500 dark:text-gray-400">No content available</div>;
+    return (
+      <div className="text-gray-500 dark:text-gray-400">
+        No content available
+      </div>
+    );
   }
 
   const blocks = parseContent(value);

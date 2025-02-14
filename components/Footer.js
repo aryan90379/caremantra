@@ -28,15 +28,20 @@ const Footer = () => {
                 href="/"
                 className="flex items-center space-x-3 rtl:space-x-reverse"
               >
-                <Image
+                <img
                   src="/logo.jpg"
-                  className="invert dark:invert-0"
+                  class="invert dark:invert-0"
                   alt="Caremantra Logo"
-                  width={26}
-                  height={26}
+                  width="26"
+                  height="26"
+                  loading="lazy"
+                  onError={() =>
+                    console.error("Image failed to load: /logo.jpg")
+                  }
                 />
+
                 <span
-                  className="text-lg md:text-[1.5rem]"
+                  className="text-2xl md:text-[1.5rem]"
                   style={{
                     fontFamily: "'Noto Sans JP', serif",
                     fontWeight: "900",

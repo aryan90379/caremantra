@@ -49,7 +49,7 @@ const DisplayBlogs = ({ aside = false }) => {
         aside ? "w-full" : ""
       }`}
     >
-      <div className={`container mx-auto ${aside ? "p-0" : "px-5 py-20"}`}>
+      <div className={`container mx-auto ${aside ? "p-0" : "px-3 pt-8"}`}>
         {/* Search Bar (Hidden in Aside Mode) */}
         {!aside && (
           <motion.div
@@ -83,12 +83,18 @@ const DisplayBlogs = ({ aside = false }) => {
         )}
 
         {/* Blog Cards */}
-        <div className={`${aside ? "flex flex-col space-y-6" : "flex flex-wrap -m-4"}`}>
+        <div
+          className={`${
+            aside ? "flex flex-col space-y-6" : "flex flex-wrap -m-4"
+          }`}
+        >
           {filteredArticles.length > 0 ? (
             filteredArticles
               .filter((article) => {
                 const publishedAt = new Date(article.publishedAt);
-                return article.status === "published" && publishedAt < currentTime;
+                return (
+                  article.status === "published" && publishedAt < currentTime
+                );
               })
               .map((article, idx) => (
                 <motion.div
@@ -97,11 +103,17 @@ const DisplayBlogs = ({ aside = false }) => {
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
                   variants={cardVariants}
-                  className={`p-4 ${aside ? "w-full" : "lg:w-1/4 md:w-1/2 w-full"}`}
+                  className={`p-4 ${
+                    aside ? "w-full" : "lg:w-1/4 md:w-1/2 w-full"
+                  }`}
                   whileHover={{ scale: 1.05 }}
                 >
                   <Link href={`/blogs/${article.slug}`}>
-                    <article className={`group ${aside ? "flex items-start space-x-4" : ""}`}>
+                    <article
+                      className={`group ${
+                        aside ? "flex items-start space-x-4" : ""
+                      }`}
+                    >
                       {/* Adjusted Image Size for Aside */}
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -109,19 +121,26 @@ const DisplayBlogs = ({ aside = false }) => {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                       >
-                        <Image
+                        <img
                           alt={article.title}
-                          src={article.thumbnail || "https://via.placeholder.com/600x400"}
-                          width={aside ? 100 : 600}
-                          height={aside ? 100 : 400}
-                          className={`${
+                          src={
+                            article.thumbnail ||
+                            "https://via.placeholder.com/600x400"
+                          }
+                          width={aside ? "100" : "600"}
+                          height={aside ? "100" : "400"}
+                          class={`${
                             aside
-                              ? "w-24 h-24 rounded-lg object-cover"
+                              ? "w-24 h-24 rounded-lg object-cover filter "
                               : "h-56 w-full rounded-xl object-cover shadow-xl"
                           } transition group-hover:grayscale-[50%] dark:shadow-gray-700/25`}
-                          placeholder="blur"
-                          blurDataURL="https://placehold.co/600x400"
                           loading="lazy"
+                          onError={() =>
+                            console.error(
+                              "Image failed to load:",
+                              article.thumbnail
+                            )
+                          }
                         />
                       </motion.div>
 
@@ -142,10 +161,15 @@ const DisplayBlogs = ({ aside = false }) => {
                           </motion.p>
                         )}
 
-                        <motion.div className="flex items-center mt-2" variants={fadeIn}>
+                        <motion.div
+                          className="flex items-center mt-2"
+                          variants={fadeIn}
+                        >
                           <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {article?.author || "Unknown"} | {article?.readingTime || "N/A"} min read | {" "}
-                            {article?.publishedAt?.slice(0, 10) || "Unknown Date"}
+                            {article?.author || "Unknown"} |{" "}
+                            {article?.readingTime || "N/A"} min read |{" "}
+                            {article?.publishedAt?.slice(0, 10) ||
+                              "Unknown Date"}
                           </span>
                         </motion.div>
                       </div>

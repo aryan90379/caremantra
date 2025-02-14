@@ -34,8 +34,9 @@ const Navbar = () => {
           <li key={item}>
             <a
               href="#"
+              onClick={toggleNav}
               className="block px-4 py-2 rounded-md transition-all duration-200 
-              hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+              hover:bg-gradient-to-r hov  er:from-purple-300 hover:to-pink-300 
               dark:hover:from-gray-700 dark:hover:to-gray-800 
               hover:text-white dark:hover:text-gray-100"
             >
@@ -76,6 +77,7 @@ const Navbar = () => {
             dark:hover:from-gray-700 dark:hover:to-gray-800 
             hover:text-white dark:hover:text-gray-100"
           >
+            
             {item}
           </a>
         </li>
@@ -160,17 +162,19 @@ const Navbar = () => {
   return (
     <>
       <nav className="z-20  fixed top-0 left-0 right-0 max-h-fit bg-white dark:bg-gray-950">
-        <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-3 pt-2 pb-2 md:pb-3  md:p-4">
           <Link
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <Image
+            <img
               src="/logo.jpg"
-              className=" invert dark:invert-0"
-              alt="Flowbite Logo"
-              width={26}
-              height={26}
+              class="invert dark:invert-0"
+              alt="Caremantra logo"
+              width="26"
+              height="26"
+              loading="lazy"
+              onError={() => console.error("Image failed to load: /logo.jpg")}
             />
 
             <style>
@@ -280,16 +284,24 @@ const Navbar = () => {
                             className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
                             passHref
                           >
-                            <Image
+                            <img
                               alt={article.title}
                               src={
                                 article.thumbnail ||
                                 "https://via.placeholder.com/50"
                               }
-                              width={50}
-                              height={50}
-                              className="w-12 h-12 rounded-md object-cover shadow-md"
+                              width="50"
+                              height="50"
+                              class="w-12 h-12 rounded-md object-cover shadow-md"
+                              loading="lazy"
+                              onError={() =>
+                                console.error(
+                                  "Image failed to load:",
+                                  article.thumbnail
+                                )
+                              }
                             />
+
                             <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
                               {article.title}
                             </p>
@@ -323,15 +335,21 @@ const Navbar = () => {
                         >
                           {/* Profile Image */}
                           <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                            <Image
+                            <img
                               src={
                                 session?.user?.image || "/default-profile.png"
                               }
                               alt={`${
                                 session?.user?.name || "User"
                               }'s profile picture`}
-                              layout="fill"
-                              objectFit="cover"
+                              class="w-full h-full object-cover"
+                              loading="lazy"
+                              onError={() =>
+                                console.error(
+                                  "Image failed to load:",
+                                  session?.user?.image
+                                )
+                              }
                             />
                           </div>
                         </button>
@@ -345,7 +363,7 @@ const Navbar = () => {
                           <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             {/* <div>{username}</div> */}
                             <div className="font-medium  truncate">
-                              {session.user.email.split('@')[0]}
+                              {session.user.email.split("@")[0]}
                             </div>
                           </div>
                           {status === "authenticated" &&
@@ -479,16 +497,24 @@ const Navbar = () => {
                           className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
                           passHref
                         >
-                          <Image
+                          <img
                             alt={article.title}
                             src={
                               article.thumbnail ||
                               "https://via.placeholder.com/50"
                             }
-                            width={50}
-                            height={50}
-                            className="w-12 h-12 rounded-md object-cover shadow-md"
+                            width="50"
+                            height="50"
+                            class="w-12 h-12 rounded-md object-cover shadow-md"
+                            loading="lazy"
+                            onError={() =>
+                              console.error(
+                                "Image failed to load:",
+                                article.thumbnail
+                              )
+                            }
                           />
+
                           <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
                             {article.title}
                           </p>
@@ -516,6 +542,7 @@ const Navbar = () => {
                     } 
                     `}
                   aria-current={pathname === "/" ? "page" : undefined}
+                  onClick={toggleNav}
                 >
                   Home
                 </Link>
@@ -537,7 +564,7 @@ const Navbar = () => {
       }`}
                   type="button"
                 >
-                  <Link href={"/blogs"}>Blogs</Link>
+                  <Link onClick={toggleNav}  href={"/blogs"}>Blogs</Link>
                   <AnimatedArrow isOpen={isBlogDropdownOpen} />
                 </button>
 
@@ -569,6 +596,7 @@ const Navbar = () => {
                         : "text-gray-800 dark:text-gray-200"
                     } 
                     `}
+                    onClick={toggleNav}
                 >
                   Daily Health
                 </Link>
@@ -591,7 +619,7 @@ const Navbar = () => {
       }`}
                   type="button"
                 >
-                  <Link href={"/tools"}>Tools</Link>
+                  <Link onClick={toggleNav} href={"/tools"}>Tools</Link>
                   <AnimatedArrow isOpen={isToolsDropdownOpen} />
                 </button>
 

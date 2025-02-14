@@ -88,18 +88,18 @@ const DisplayArticles = () => {
               <div key={idx} className="p-4 lg:w-1/3 w-full">
                 <div className="h-full   bg-opacity-75 lg:px-8 pt-8 pb-8 rounded-lg overflow-hidden text-center relative">
                   {/* Image using Next.js Image component */}
-                  <Image
+                  <img
                     alt={article.title}
                     src={
                       article.thumbnail || "https://via.placeholder.com/600x400"
                     }
-                    width={600} // Set width to desired value
-                    height={400} // Set height to desired value
-                    className="h-56 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] dark:shadow-gray-700/25"
-                    priority={false} // Load image immediately for better performance
-                    placeholder="blur" // Blur-up effect while loading
-                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWx...eF1zdmc+PHN2ZyBkYXRhPSJldmFsbCwgM2sgcnMgc3h1cGE=" // Custom low-quality image placeholder
-                    loading="lazy" // Lazy loading for optimized performance
+                    width="600"
+                    height="400"
+                    class="h-56 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] dark:shadow-gray-700/25"
+                    onError={() =>
+                      console.error("Image failed to load:", article.thumbnail)
+                    }
+                    loading="lazy"
                   />
 
                   <h2 className="tracking-widest text-sm title-font font-medium text-gray-400 mb-1">
