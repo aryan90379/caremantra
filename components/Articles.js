@@ -95,7 +95,7 @@ const DisplayArticles = () => {
                     }
                     width="600"
                     height="400"
-                    class="h-56 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] dark:shadow-gray-700/25"
+                    className="h-56 w-full rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] dark:shadow-gray-700/25"
                     onError={() =>
                       console.error("Image failed to load:", article.thumbnail)
                     }

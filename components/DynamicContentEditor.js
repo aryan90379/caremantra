@@ -138,7 +138,7 @@ const DynamicContentEditor = ({ value = "", onChange }) => {
       case "paragraph":
         return (
           <textarea
-            className={`w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-800 ${block.color}`}
+            className={`w-full h-28 p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-800 ${block.color}`}
             value={block.content}
             onChange={(e) => handleChange(index, e.target.value)}
             onBlur={handleBlur}
@@ -182,15 +182,15 @@ const DynamicContentEditor = ({ value = "", onChange }) => {
   };
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md  sm:p-6 md:p-8">
+    <div className="w-full bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md  sm:p-1 ">
   {blocks.map((block, index) => (
     <div
       key={index}
       className="mb-5 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg"
     >
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center py-3 sm:justify-between gap-2">
         <select
-          className="p-3 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          className="p-3 rounded-lg border  dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           value={block.type}
           onChange={(e) => handleTypeChange(index, e.target.value)}
         >
@@ -205,7 +205,7 @@ const DynamicContentEditor = ({ value = "", onChange }) => {
         {block.type !== "image" && (
           <div className="flex flex-col sm:flex-row gap-2">
             <select
-              className="p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              className="p-2 mb4- rounded-lg border dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               value={block.color.split(" ").find((c) => !c.startsWith("dark:"))}
               onChange={(e) => handleNormalColorChange(index, e.target.value)}
             >

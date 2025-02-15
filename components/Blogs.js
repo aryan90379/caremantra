@@ -129,7 +129,7 @@ const DisplayBlogs = ({ aside = false }) => {
                           }
                           width={aside ? "100" : "600"}
                           height={aside ? "100" : "400"}
-                          class={`${
+                          className={`${
                             aside
                               ? "w-24 h-24 rounded-lg object-cover filter "
                               : "h-56 w-full rounded-xl object-cover shadow-xl"

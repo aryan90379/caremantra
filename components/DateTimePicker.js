@@ -73,7 +73,7 @@ export default function DateTimePicker({ value, onChange }) {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-4">
+    <div className="flex flex-col items-center dark:text-black dark:bg-gray space-y-4 p-4">
       {/* Date Picker */}
       <input
         type="date"
@@ -86,14 +86,14 @@ export default function DateTimePicker({ value, onChange }) {
       <div className="relative w-64">
         <button
           type="button"
-          className="w-full p-2 border rounded-md bg-white text-left"
+          className="w-full p-2 border rounded-md bg-gray-300 text-left"
           onClick={() => setShowTimes(!showTimes)}
         >
           {time || "Pick a time"}
         </button>
 
         {showTimes && (
-          <div className="absolute mt-1 w-full rounded-md bg-white border shadow-md z-10 max-h-40 overflow-y-auto">
+          <div className="absolute mt-1 w-full rounded-md bg-gray-300 border shadow-md z-10 max-h-40 overflow-y-auto">
             {timeSlots.map((slot) => (
               <div
                 key={slot}

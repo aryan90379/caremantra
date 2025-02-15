@@ -30,7 +30,7 @@ const Footer = () => {
               >
                 <img
                   src="/logo.jpg"
-                  class="invert dark:invert-0"
+                  className="invert dark:invert-0"
                   alt="Caremantra Logo"
                   width="26"
                   height="26"
@@ -176,9 +176,9 @@ const Footer = () => {
               <ul className="mt-6 space-y-4 text-sm">
                 {[
                   { href: "/about", label: "About Us" },
-                  { href: "/policies/privacy-policy", label: "Privacy Policy" },
+                  { href: "/privacy-policy", label: "Privacy Policy" },
                   {
-                    href: "/policies/cookies-policy",
+                    href: "/terms-of-service",
                     label: "Terms of Service",
                   },
                 ].map((item) => (

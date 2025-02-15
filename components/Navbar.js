@@ -28,22 +28,25 @@ const Navbar = () => {
   }, []);
 
   const renderInfoDropdown = () => (
-    <ul className="md:py-2  text-xl md:text-sm text-gray-900 dark:text-gray-200">
+    <ul className="md:py-2 text-xl md:text-sm text-gray-900 dark:text-gray-200">
       {["About", "Privacy Policy", "Terms of Service", "Cookie Policy"].map(
-        (item) => (
-          <li key={item}>
-            <a
-              href="#"
-              onClick={toggleNav}
-              className="block px-4 py-2 rounded-md transition-all duration-200 
-              hover:bg-gradient-to-r hov  er:from-purple-300 hover:to-pink-300 
-              dark:hover:from-gray-700 dark:hover:to-gray-800 
-              hover:text-white dark:hover:text-gray-100"
-            >
-              {item}
-            </a>
-          </li>
-        )
+        (item) => {
+          const url = `/${item.toLowerCase().replace(/\s+/g, "-")}`;
+          return (
+            <li key={item}>
+              <a
+                href={url}
+                onClick={toggleNav}
+                className="block px-4 py-2 rounded-md transition-all duration-200 
+                hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+                dark:hover:from-gray-700 dark:hover:to-gray-800 
+                hover:text-white dark:hover:text-gray-100"
+              >
+                {item}
+              </a>
+            </li>
+          );
+        }
       )}
     </ul>
   );
@@ -77,7 +80,6 @@ const Navbar = () => {
             dark:hover:from-gray-700 dark:hover:to-gray-800 
             hover:text-white dark:hover:text-gray-100"
           >
-            
             {item}
           </a>
         </li>
@@ -169,7 +171,7 @@ const Navbar = () => {
           >
             <img
               src="/logo.jpg"
-              class="invert dark:invert-0"
+              className="invert dark:invert-0"
               alt="Caremantra logo"
               width="26"
               height="26"
@@ -292,7 +294,7 @@ const Navbar = () => {
                               }
                               width="50"
                               height="50"
-                              class="w-12 h-12 rounded-md object-cover shadow-md"
+                              className="w-12 h-12 rounded-md object-cover shadow-md"
                               loading="lazy"
                               onError={() =>
                                 console.error(
@@ -342,7 +344,7 @@ const Navbar = () => {
                               alt={`${
                                 session?.user?.name || "User"
                               }'s profile picture`}
-                              class="w-full h-full object-cover"
+                              className="w-full h-full object-cover"
                               loading="lazy"
                               onError={() =>
                                 console.error(
@@ -505,7 +507,7 @@ const Navbar = () => {
                             }
                             width="50"
                             height="50"
-                            class="w-12 h-12 rounded-md object-cover shadow-md"
+                            className="w-12 h-12 rounded-md object-cover shadow-md"
                             loading="lazy"
                             onError={() =>
                               console.error(
@@ -564,7 +566,9 @@ const Navbar = () => {
       }`}
                   type="button"
                 >
-                  <Link onClick={toggleNav}  href={"/blogs"}>Blogs</Link>
+                  <Link onClick={toggleNav} href={"/blogs"}>
+                    Blogs
+                  </Link>
                   <AnimatedArrow isOpen={isBlogDropdownOpen} />
                 </button>
 
@@ -596,7 +600,7 @@ const Navbar = () => {
                         : "text-gray-800 dark:text-gray-200"
                     } 
                     `}
-                    onClick={toggleNav}
+                  onClick={toggleNav}
                 >
                   Daily Health
                 </Link>
@@ -619,7 +623,9 @@ const Navbar = () => {
       }`}
                   type="button"
                 >
-                  <Link onClick={toggleNav} href={"/tools"}>Tools</Link>
+                  <Link onClick={toggleNav} href={"/tools"}>
+                    Tools
+                  </Link>
                   <AnimatedArrow isOpen={isToolsDropdownOpen} />
                 </button>
 
@@ -670,6 +676,57 @@ const Navbar = () => {
               </li>
 
               {<li className="md:hidden">{renderInfoDropdown()}</li>}
+
+              {status === "authenticated" &&
+                adminEmails?.includes(session?.user?.email) && (
+                  <>
+                    <li>
+                      <Link
+                        href="/admin/dashboard"
+                        className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+            ${
+              pathname === "/admin/dashboard"
+                ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+                : "text-gray-800 dark:text-gray-200"
+            } 
+          `}
+                        onClick={toggleNav}
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/admin/articles"
+                        className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+            ${
+              pathname === "/admin/articles"
+                ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+                : "text-gray-800 dark:text-gray-200"
+            } 
+          `}
+                        onClick={toggleNav}
+                      >
+                        Articles
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/earnings"
+                        className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+            ${
+              pathname === "/earnings"
+                ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+                : "text-gray-800 dark:text-gray-200"
+            } 
+          `}
+                        onClick={toggleNav}
+                      >
+                        Comments
+                      </Link>
+                    </li>
+                  </>
+                )}
             </ul>
           </div>
         </div>

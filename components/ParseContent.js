@@ -57,7 +57,7 @@ const BlockRenderer = ({ block }) => {
           <img
             src={content}
             alt="Image"
-            class="w-full h-full object-cover rounded-lg shadow-lg"
+            className="w-full h-full object-cover rounded-lg shadow-lg"
             onError={() => console.error("Image failed to load:", content)}
           />
         </div>

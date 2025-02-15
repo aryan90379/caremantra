@@ -36,7 +36,7 @@ const Articles = () => {
   // to to allow only admin entries
   if (status === "authenticated" && adminEmails?.includes(session?.user?.email)) {
     return (
-      <div className="text-black dark:text-white mt-10">
+      <div className="text-black dark:text-white ">
         <DisplayArticles />
       </div>
     );

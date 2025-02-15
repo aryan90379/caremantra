@@ -55,7 +55,7 @@ const ChatBubble = ({
           <div className="flex items-center">
             <p className="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-white">
               <img
-                class="mr-2 w-6 h-6 rounded-full object-cover"
+                className="mr-2 w-6 h-6 rounded-full object-cover"
                 src={avatar || "/profileplace.jpg"}
                 alt={`${name}'s avatar`}
                 width="24"
