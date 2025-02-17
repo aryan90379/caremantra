@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { Typewriter } from "react-simple-typewriter";
 
 export default function Home() {
   return (
-    <section className="relative w-full md:h-screen h-96 bg-gray-700 bg-blend-multiply overflow-hidden">
+    <section className="relative w-full md:h-screen h-96 bg-gray-900 overflow-hidden">
       {/* Video Background */}
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
@@ -16,21 +17,29 @@ export default function Home() {
       ></video>
 
       {/* Overlay Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white bg-black bg-opacity-50">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
         <motion.h1
           className="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl lg:text-6xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          Discover Blogs & Daily Health Insights
+          <Typewriter
+            words={["Discover Blogs", "Daily Health Insights", "Stay Informed"]}
+            loop={true}
+            cursor
+            cursorStyle="|"
+            typeSpeed={70}
+            deleteSpeed={50}
+            delaySpeed={1500}
+          />
         </motion.h1>
 
         <motion.p
           className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2 }}
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
           Engage with inspiring stories, explore top health tips, and stay informed with our curated daily health updates.
         </motion.p>
@@ -40,10 +49,11 @@ export default function Home() {
           {/* Explore Blogs Button */}
           <motion.a
             href="/blogs"
-            className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+            className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 transition-all duration-200 shadow-lg"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.4 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.6 }}
           >
             Explore Blogs
             <svg
@@ -66,10 +76,11 @@ export default function Home() {
           {/* Explore Daily Health Button */}
           <motion.a
             href="/daily-health"
-            className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ml-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400"
+            className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ml-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400 transition-all duration-200 shadow-lg"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.4 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.6 }}
           >
             Explore Daily Health
           </motion.a>

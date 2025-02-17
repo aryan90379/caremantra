@@ -179,7 +179,7 @@ export const updateCommentByTitle = async (title, newCommentData) => {
 
     // Append the new comment to the article's comments array
     article.comments.push(newComment);
-    // console.log("Updated comments:", article.comments);
+    console.log("Updated comments:", article.comments);
 
     // Save the changes to the article
     await article.save();
@@ -219,37 +219,10 @@ export const deleteCommentById = async (title, commentId) => {
     article.comments.splice(commentIndex, 1);
     await article.save();
 
-    // console.log("Comment deleted successfully:", commentId);
+    console.log("Comment deleted successfully:", commentId);
     return { success: true };  // Return an object with success flag
   } catch (error) {
     console.error("Error deleting comment by ID:", error);
     return { success: false, message: error.message };  // Return failure status and error message
-  }
-};
-
-
-
-// view count
-export const updateViewCount = async (slug) => {
-  try {
-    await connectToDatabase();
-
-    // Find the article by slug and increment the views count
-    const article = await Article.findOneAndUpdate(
-      { slug },
-      { $inc: { views: 1 } },
-      { new: true } // Return the updated document
-    );
-
-    console.log("Updated views count:", article.views)
-    if (!article) {
-      throw new Error("Article not found");
-    }
-
-    // Return the updated views count
-    return article.views;
-  } catch (error) {
-    console.error("Error updating view count:", error);
-    throw error;
   }
 };

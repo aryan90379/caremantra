@@ -16,12 +16,11 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-const DisplayBlogs = ({ aside = false }) => {
+const CatBlogs = ({ aside = false ,cat}) => {
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredArticles, setFilteredArticles] = useState([]);
   const currentTime = new Date();
-
   useEffect(() => {
     getData();
   }, []);
@@ -43,6 +42,7 @@ const DisplayBlogs = ({ aside = false }) => {
     setFilteredArticles(matchedArticles);
   };
 
+  
   return (
     <section
       className={`text-gray-600 dark:text-gray-300 body-font ${
@@ -85,7 +85,7 @@ const DisplayBlogs = ({ aside = false }) => {
         {/* Blog Cards */}
         <div
           className={`${
-            aside ? "flex flex-col space-y-6 pb-7" : "flex flex-wrap -m-4"
+            aside ? "flex flex-col space-y-6" : "flex flex-wrap -m-4"
           }`}
         >
           {filteredArticles.length > 0 ? (
@@ -93,7 +93,7 @@ const DisplayBlogs = ({ aside = false }) => {
               .filter((article) => {
                 const publishedAt = new Date(article.publishedAt);
                 return (
-                  article.status === "published" && publishedAt < currentTime
+                  article.status === "published" && publishedAt < currentTime && article.category.trim().toLowerCase().replace(/\s+/g, '-') === cat.trim().toLowerCase()
                 );
               })
               .map((article, idx) => (
@@ -103,8 +103,8 @@ const DisplayBlogs = ({ aside = false }) => {
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.2 }}
                   variants={cardVariants}
-                  className={` ${
-                    aside ? "w-full" : "lg:w-1/4 p-4 md:w-1/2 w-full"
+                  className={`p-4 ${
+                    aside ? "w-full" : "lg:w-1/4 md:w-1/2 w-full"
                   }`}
                   whileHover={{ scale: 1.05 }}
                 >
@@ -121,33 +121,32 @@ const DisplayBlogs = ({ aside = false }) => {
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                       >
-                       <img
+                        <img
                           alt={article.title}
                           src={
-                            article.featuredImage ||
+                            article.thumbnail ||
                             "https://via.placeholder.com/600x400"
                           }
                           width={aside ? "100" : "600"}
                           height={aside ? "100" : "400"}
                           className={`${
                             aside
-                              ? "w-24 h-24 rounded-md object-cover filter "
-                              : "h-56 w-full rounded-lg object-cover shadow-xl"
+                              ? "w-24 h-24 rounded-lg object-cover filter "
+                              : "h-56 w-full rounded-xl object-cover shadow-xl"
                           } transition group-hover:grayscale-[50%] dark:shadow-gray-700/25`}
                           loading="lazy"
                           onError={() =>
                             console.error(
                               "Image failed to load:",
-                              article.featuredImage
+                              article.thumbnail
                             )
                           }
                         />
-                        
                       </motion.div>
 
                       <div className={`${aside ? "flex-1" : "p-4"}`}>
                         <motion.h3
-                          className={`${aside ? "text-sm" : "text-lg"} font-medium text-gray-900 dark:text-white`}
+                          className="text-lg font-medium text-gray-900 dark:text-white"
                           variants={fadeIn}
                         >
                           {article.title}
@@ -166,7 +165,7 @@ const DisplayBlogs = ({ aside = false }) => {
                           className="flex items-center mt-2"
                           variants={fadeIn}
                         >
-                          <span className={` ${aside? "hidden": "" } text-sm text-gray-500 dark:text-gray-400`}>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
                             {article?.author || "Unknown"} |{" "}
                             {article?.readingTime || "N/A"} min read |{" "}
                             {article?.publishedAt?.slice(0, 10) ||
@@ -194,4 +193,4 @@ const DisplayBlogs = ({ aside = false }) => {
   );
 };
 
-export default DisplayBlogs;
+export default CatBlogs;

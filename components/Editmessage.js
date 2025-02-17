@@ -6,22 +6,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { Bounce } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import UltraPrompt from "./UltraPrompt"; // Import the sign-in prompt
 
-const EditMessage = ({ parentId= null ,childId = null}) => { 
+const EditMessage = ({ parentId = null, childId = null }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
+  const [showPrompt, setShowPrompt] = useState(false); // State to control sign-in prompt
   const pathname = usePathname();
   const title = pathname.split("/").pop();
 
-  // Format the comment as an object
-  const formatCommentObject = (comment, byUser, profile, parentId,childId) => {
+  const formatCommentObject = (comment, byUser, profile, parentId, childId) => {
     return {
-      by_user: byUser,  // The user making the comment
-      content: comment, // The comment's content
-      profile: profile, // The user's profile image (or default)
-      parentId: parentId,  // The user being commented on (optional, defaults to null)
-      childId: childId,  // The user being commented on (optional, defaults to null)
-      onDate: new Date().toISOString(), // The date when the comment was posted
+      by_user: byUser,
+      content: comment,
+      profile: profile,
+      parentId: parentId,
+      childId: childId,
+      onDate: new Date().toISOString(),
     };
   };
 
@@ -29,27 +30,16 @@ const EditMessage = ({ parentId= null ,childId = null}) => {
     e.preventDefault();
 
     if (!session) {
-      toast.error("You need to be logged in to post a comment.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      setShowPrompt(true); // Show sign-in prompt instead of toast error
       return;
     }
 
     const formattedComment = formatCommentObject(
-      comment, 
-      session.user.email,  // User's email (or other identifier)
-      session?.user?.image || "/default-avatar.png", // User's profile image (or default if not available)
+      comment,
+      session.user.email,
+      session?.user?.image || "/default-avatar.png",
       parentId,
       childId
-      // Pass the toUser, which defaults to null if not provided
     );
 
     try {
@@ -65,7 +55,7 @@ const EditMessage = ({ parentId= null ,childId = null}) => {
         theme: "light",
         transition: Bounce,
       });
-      setComment(""); // Clear input field
+      setComment("");
     } catch (error) {
       toast.error("Failed to post comment.", {
         position: "top-right",
@@ -84,6 +74,7 @@ const EditMessage = ({ parentId= null ,childId = null}) => {
   return (
     <div>
       <ToastContainer />
+      {showPrompt && <UltraPrompt onClose={() => setShowPrompt(false)} />} {/* Show sign-in prompt */}
       <form className="mb-6" onSubmit={handleSubmit}>
         <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
           <label htmlFor="comment" className="sr-only">

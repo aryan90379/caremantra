@@ -9,6 +9,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { fetchArticles } from "@/actions/useractions";
 import Breadcrumb from "./BreadCrumb";
+import LoginPrompt from "./LoginPrompt";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -70,23 +71,50 @@ const Navbar = () => {
   );
 
   const renderBlogDropdown = () => (
-    <ul className="py-2  text-xl font-medium pl-8 md:text-sm md:pl-0 text-gray-900 dark:text-gray-200">
-      {["Alpha", "Beta", "Gamma"].map((item) => (
-        <li key={item}>
+    <ul className="py-2 text-xl font-medium pl-8 md:text-sm md:pl-0 text-gray-900 dark:text-gray-200">
+      {[
+        { name: "Cardiology", desc: "Heart" },
+        { name: "Orthopedics", desc: "Bones and Joints" },
+        { name: "Gastroenterology", desc: "Digestive System" },
+        { name: "Pediatrics", desc: "Children's Health" },
+        { name: "Gynecology", desc: "Women's Health" },
+        { name: "Urology", desc: "Urinary System and Male Reproductive Health" },
+        { name: "Pulmonology", desc: "Respiratory System" },
+        { name: "Ophthalmology", desc: "Eyes" },
+        { name: "ENT", desc: "Ear, Nose, and Throat" },
+        { name: "Nephrology", desc: "Kidneys" },
+        { name: "Endocrinology", desc: "Hormonal Disorders" },
+        { name: "Rheumatology", desc: "Arthritis and Autoimmune Diseases" },
+        { name: "Nutrition & Diet", desc: "Healthy Eating and Nutrition" },
+        { name: "Mental Health", desc: "Emotional and Psychological Well-being" },
+        { name: "New Mom Tips", desc: "Guidance for New Mothers" },
+        { name: "Lifestyle", desc: "Health and Daily Living" },
+        { name: "Dermatology", desc: "Skin and Hair Health" },
+        { name: "Oncology", desc: "Cancer Care and Treatment" },
+        { name: "Fertility Health", desc: "Reproductive Wellness" },
+      ].map(({ name, desc }) => (
+        <li key={name}>
           <a
-            href="#"
+            href={`/blogs/categories/${name.toLowerCase().replace(/\s+/g, '-')}`}
             className="block px-4 py-2 rounded-md transition-all duration-200 
-            hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
-            dark:hover:from-gray-700 dark:hover:to-gray-800 
-            hover:text-white dark:hover:text-gray-100"
+              hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+              dark:hover:from-gray-700 dark:hover:to-gray-800 
+              hover:text-white dark:hover:text-gray-100"
           >
-            {item}
+            {name}
+            {desc && (
+              <span className="block text-sm text-gray-800 dark:text-gray-400">
+                {desc}
+              </span>
+            )}
           </a>
         </li>
       ))}
     </ul>
   );
-
+  
+  
+  
   const getData = async () => {
     const data = await fetchArticles();
     setArticles(data);
@@ -133,15 +161,15 @@ const Navbar = () => {
     );
   };
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      const timeout = setTimeout(() => {
-        signIn("google");
-      }, 5000); // Delay of 2 seconds
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     const timeout = setTimeout(() => {
+  //       signIn("google");
+  //     }, 5000); // Delay of 2 seconds
 
-      return () => clearTimeout(timeout); // Cleanup function to clear the timeout if the component unmounts or `status` changes
-    }
-  }, [status]);
+  //     return () => clearTimeout(timeout); // Cleanup function to clear the timeout if the component unmounts or `status` changes
+  //   }
+  // }, [status]);
 
   const toggleToolsDropdown = () => {
     setIsToolsDropdownOpen(!isToolsDropdownOpen);
@@ -163,6 +191,7 @@ const Navbar = () => {
 
   return (
     <>
+      <LoginPrompt />
       <nav className="z-20  fixed top-0 left-0 right-0 max-h-fit bg-white dark:bg-gray-950">
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-3 pt-2 pb-2 md:pb-3  md:p-4">
           <Link
@@ -274,41 +303,46 @@ const Navbar = () => {
 
                   {/* showing articles in search bar */}
                   {isFocused && (
-                    <div className="forlarge absolute hidden lg:block  top-full z-[9999] mt-2 w-9/12 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
-                      {filteredArticles.length > 0 ? (
-                        filteredArticles.slice(0, 10).map((article, idx) => (
-                          <Link
-                            href={`/blogs/${article.slug}`}
-                            key={idx}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                            className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
-                            passHref
-                          >
-                            <img
-                              alt={article.title}
-                              src={
-                                article.thumbnail ||
-                                "https://via.placeholder.com/50"
-                              }
-                              width="50"
-                              height="50"
-                              className="w-12 h-12 rounded-md object-cover shadow-md"
-                              loading="lazy"
-                              onError={() =>
-                                console.error(
-                                  "Image failed to load:",
-                                  article.thumbnail
-                                )
-                              }
-                            />
+                    <div className="forlarge absolute hidden lg:block top-full z-[9999] mt-2 w-9/12 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
+                      {filteredArticles.filter(
+                        (article) => article.status === "published"
+                      ).length > 0 ? (
+                        filteredArticles
+                          .filter((article) => article.status === "published")
+                          .slice(0, 10)
+                          .map((article, idx) => (
+                            <Link
+                              href={`/blogs/${article.slug}`}
+                              key={idx}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
+                              passHref
+                            >
+                              <img
+                                alt={article.title}
+                                src={
+                                  article.thumbnail ||
+                                  "https://via.placeholder.com/50"
+                                }
+                                width="50"
+                                height="50"
+                                className="w-12 h-12 rounded-md object-cover shadow-md"
+                                loading="lazy"
+                                onError={() =>
+                                  console.error(
+                                    "Image failed to load:",
+                                    article.thumbnail
+                                  )
+                                }
+                              />
 
-                            <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
-                              {article.title}
-                            </p>
-                          </Link>
-                        ))
+                              <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
+                                {article.title}
+                              </p>
+                            </Link>
+                          ))
                       ) : (
                         <p className="p-3 text-center text-gray-600 dark:text-gray-400">
                           No results found.
@@ -373,7 +407,7 @@ const Navbar = () => {
                               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                                 <li>
                                   <Link
-                                    href="/admin/dashboard"
+                                    href="/admin/articles/dashboard"
                                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
                                     Dashboard
@@ -531,12 +565,12 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+            <ul className="flex flex-col    p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 sm:max-h-none sm:overflow-visible max-h-[400px] overflow-y-auto">
               {/* Home */}
               <li>
                 <Link
                   href="/"
-                  className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+                  className={`block py-3 px-4 md:text-xl sm:text-xs  font-semibold rounded-md transition-all duration-300 
                     ${
                       pathname === "/"
                         ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
@@ -558,7 +592,7 @@ const Navbar = () => {
               >
                 <button
                   onClick={toggleBlogDropdown}
-                  className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+                  className={`block py-3 px-4 text-xl font-semibold rounded-lg transition-all duration-300 
       ${
         pathname === "/blogs"
           ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
@@ -572,16 +606,68 @@ const Navbar = () => {
                   <AnimatedArrow isOpen={isBlogDropdownOpen} />
                 </button>
 
-                {/* Dropdown inside "Blogs" (For md and larger) */}
+                {/* Dropdown */}
                 {isBlogDropdownOpen && (
-                  <div
-                    className="absolute left-0 z-10 w-48 bg-white dark:bg-gray-950 rounded-lg md:shadow-lg 
-      backdrop-blur-md bg-opacity-80 dark:bg-opacity-80 border border-gray-200 dark:border-gray-700 
-      animate-fadeIn hidden md:block"
-                  >
-                    {renderBlogDropdown()}
-                  </div>
-                )}
+  <div
+    className="absolute hidden md:block left-0 z-50 w-[48rem] bg-white/20 dark:bg-gray-900/20 
+    backdrop-blur-lg rounded-2xl border border-gray-300 dark:border-gray-700 
+    shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-300 
+    animate-fadeIn p-4"
+  >
+    <ul className="grid grid-cols-2 md:grid-cols-5 gap-2 text-md font-medium text-gray-900 dark:text-gray-200">
+      {[
+        { name: "Cardiology", desc: "Heart" },
+        { name: "Orthopedics", desc: "Bones & Joints" },
+        { name: "Gastroenterology", desc: "Digestive System" },
+        { name: "Pediatrics", desc: "Children's Health" },
+        { name: "Gynecology", desc: "Women's Health" },
+        { name: "Urology", desc: "Urinary System" },
+        { name: "Pulmonology", desc: "Respiratory System" },
+        { name: "Ophthalmology", desc: "Eyes" },
+        { name: "ENT", desc: "Ear, Nose & Throat" },
+        { name: "Nephrology", desc: "Kidneys" },
+        { name: "Endocrinology", desc: "Hormones" },
+        { name: "Rheumatology", desc: "Autoimmune Diseases" },
+        { name: "Nutrition & Diet", desc: "Healthy Eating and Nutrition" },
+        { name: "Mental Health", desc: "Emotional and Psychological Well-being" },
+        { name: "New Mom Tips", desc: "Guidance for New Mothers" },
+        { name: "Lifestyle", desc: "Health and Daily Living" },
+        { name: "Dermatology", desc: "Skin and Hair Health" },
+        { name: "Oncology", desc: "Cancer Care and Treatment" },
+        { name: "Fertility Health", desc: "Reproductive Wellness" },
+      ].map(({ name, desc }) => (
+        <li key={name}>
+          <Link
+            href={`/blogs/categories/${name
+              .toLowerCase()
+              .replace(/\s+/g, '-')
+              .replace(/&/g, 'and')}`} // Replace & with 'and'
+            className="block p-3 rounded-2xl transition-all duration-300 
+              shadow-md bg-white/10 dark:bg-gray-800/10 backdrop-blur-md 
+              hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r 
+              hover:from-blue-500 hover:via-purple-600 hover:to-pink-500 
+              dark:hover:from-gray-700 dark:hover:via-gray-800 dark:hover:to-gray-900 
+              hover:text-white dark:hover:text-gray-100"
+          >
+            <span className="font-semibold block break-words">
+              {name}
+            </span>
+            {desc && (
+              <span className="block text-xs text-gray-600 dark:text-gray-400 break-words">
+                {desc}
+              </span>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+
+
+
+
               </li>
 
               {/* Dropdown appended after "Blogs" (For small screens) */}

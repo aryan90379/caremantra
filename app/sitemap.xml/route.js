@@ -4,7 +4,7 @@ export async function GET() {
   const baseUrl = process.env.baseUrl; // Replace with your actual domain
   const articles = await fetchArticles(); // Get articles from DB
 
-  console.log("Sitemap API Hit")
+  // console.log("Sitemap API Hit")
   const urls = articles
     .map(
       (article) => `

@@ -1,175 +1,113 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
 
 export default function PrivacyPolicy() {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowContent(true), 2000);
+  }, []);
+
   return (
-    <section className="text-gray-300 bg-gray-900 dark:bg-black body-font">
+    <section className="text-gray-300 bg-gray-900 dark:bg-black body-font overflow-hidden">
       <div className="container mx-auto px-5 py-24">
         
-        {/* Privacy Policy Heading */}
+        {/* Typing Animation Header */}
         <motion.h1
           className="text-5xl font-extrabold text-center text-white mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Privacy Policy
+          <Typewriter words={["Privacy Policy"]} loop={1} cursor cursorStyle="|" typeSpeed={50} />
         </motion.h1>
-
+        
         {/* Introduction */}
-        <p className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto">
-          Welcome to **Care Mantra Health**. Your privacy is critically important to us.  
-          This Privacy Policy explains how we **collect, use, and protect your personal information** when you use our website.
-        </p>
+        <motion.p
+          className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          Welcome to Care Mantra Health. Your privacy is of utmost importance to us. This Privacy Policy serves to provide you with a detailed explanation of what data we collect, why we collect it, and how it is used to improve your experience while ensuring top-notch security measures.
+        </motion.p>
 
-        {/* What Information We Collect */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+        {/* Animated Sections */}
+        {showContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
+            className="mt-12 space-y-12"
           >
-            🔍 What Information We Collect
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We **only collect the following information** when you sign in using Google:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>🔹 **Google Email** (to identify you for comments and features)</li>
-            <li>🔹 **Google Profile Picture** (for displaying your avatar in comments)</li>
-          </ul>
-          <p className="mt-4 text-gray-400">
-            **We do not collect any other personal data, browsing history, or device information.**  
-            Your data remains **secure and private** at all times.
-          </p>
-        </div>
+            {/* Information Collection */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">🔍 What Information We Collect</h2>
+              <p className="text-gray-400 text-lg">We collect only the necessary information when you sign in with Google, ensuring minimal data usage:</p>
+              <ul className="list-disc pl-6 text-gray-400 mt-2">
+                <li>📧 <strong>Google Email:</strong> This is used to uniquely identify you across our platform, enabling personalized services like remembering your interactions and providing a seamless experience.</li>
+                <li>🖼️ <strong>Google Profile Picture:</strong> This is used solely for displaying your avatar in comments and enhancing social interactions within our platform.</li>
+              </ul>
+              <p className="mt-4 text-gray-400">We do not track or store any additional personal data, including your browsing history, device details, or sensitive private information.</p>
+            </motion.div>
 
-        {/* How We Use Your Information */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            ⚙️ How We Use Your Information
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            Your data is used **solely to improve your experience** on our platform:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>✅ Displaying your **profile picture and name** in comments.</li>
-            <li>✅ Enabling **seamless login across multiple devices**.</li>
-            <li>✅ Keeping track of your **comment history and interactions**.</li>
-          </ul>
-          <p className="mt-4 text-gray-400">
-            We **do not share, sell, or distribute** your data to any third-party companies or advertisers.
-          </p>
-        </div>
+            {/* Data Usage */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">⚙️ How We Use Your Data</h2>
+              <p className="text-gray-400 text-lg">We leverage your data to provide a smooth and enhanced user experience. Here’s how:</p>
+              <ul className="list-disc pl-6 text-gray-400 mt-2">
+                <li>✅ <strong>Displaying Profile Information:</strong> Your profile picture and name are displayed in comments, fostering a more interactive community.</li>
+                <li>✅ <strong>Seamless Login:</strong> By using Google authentication, you can access your account across multiple devices without needing to remember passwords.</li>
+                <li>✅ <strong>Comment and Interaction History:</strong> Your previous interactions and comments are stored so that you can keep track of your participation on the platform.</li>
+              </ul>
+              <p className="mt-4 text-gray-400">We ensure that your data is never shared, sold, or used for advertising purposes.</p>
+            </motion.div>
 
-        {/* Data Security */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🔒 Data Security & Protection
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We take **serious measures** to protect your personal data:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>🔹 Your data is stored securely with **encryption protocols**.</li>
-            <li>🔹 We use **Google OAuth authentication**, so we never see your password.</li>
-            <li>🔹 Our website follows **best security practices** to prevent unauthorized access.</li>
-          </ul>
-          <p className="mt-4 text-gray-400">
-            Your **privacy and security are our top priorities**.
-          </p>
-        </div>
+            {/* Data Security */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">🔒 Data Security</h2>
+              <p className="text-gray-400 text-lg">We implement rigorous security protocols to ensure your information remains safe:</p>
+              <ul className="list-disc pl-6 text-gray-400 mt-2">
+                <li>🔹 <strong>Encryption:</strong> All data stored is protected using advanced encryption methods to prevent unauthorized access.</li>
+                <li>🔹 <strong>Secure Authentication:</strong> Google OAuth authentication ensures that your login credentials remain private and secure.</li>
+                <li>🔹 <strong>Strict Access Controls:</strong> Only authorized systems and personnel can access data, ensuring an additional layer of security.</li>
+              </ul>
+              <p className="mt-4 text-gray-400">We continuously update our security measures to stay ahead of potential threats.</p>
+            </motion.div>
 
-        {/* Data Retention Policy */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🗑️ Data Retention & Deletion
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We **only store your Google email and profile picture** as long as you use our website.  
-            You can delete your data anytime by:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>✅ **Removing your Google account** from our platform.</li>
-            <li>✅ **Manually deleting your comments**, which will remove your profile from them.</li>
-            <li>✅ Contacting us at <a href="mailto:support@caremantrahealth.com" className="text-blue-500 hover:underline">support@caremantrahealth.com</a> for assistance.</li>
-          </ul>
-        </div>
-
-        {/* Third-Party Services */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🔗 Third-Party Services
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We **do not** share your data with advertisers, but our website may use third-party services like:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>🔹 **Google Analytics** (for anonymous website traffic insights).</li>
-            <li>🔹 **Google OAuth** (for secure authentication).</li>
-          </ul>
-        </div>
-
-        {/* User Rights */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🏛️ Your Rights
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            As a user, you have the right to:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>✅ **Access and review** your stored data.</li>
-            <li>✅ **Request deletion** of your data.</li>
-            <li>✅ **Withdraw consent** to use your Google profile.</li>
-          </ul>
-        </div>
-
-        {/* Contact Information */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            📩 Contact Us
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            If you have any concerns about our Privacy Policy, feel free to contact us at:
-          </p>
-          <p className="text-blue-500 mt-2 text-lg">
-            <a href="mailto:support@caremantrahealth.com" className="hover:underline">support@caremantrahealth.com</a>
-          </p>
-        </div>
-
+            {/* Contact Section */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.9 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">📩 Contact Us</h2>
+              <p className="text-gray-400 text-lg">If you have any concerns about data privacy, feel free to reach out to us:</p>
+              <p className="text-blue-500 mt-2 text-lg">
+                <a href="mailto:support@caremantrahealth.com" className="hover:underline">support@caremantrahealth.com</a>
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   );

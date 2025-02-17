@@ -1,13 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function TermsOfService() {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowContent(true), 2000);
+  }, []);
+
   return (
     <section className="text-gray-300 bg-gray-900 dark:bg-black body-font">
       <div className="container mx-auto px-5 py-24">
-        
-        {/* Terms of Service Heading */}
+        {/* Heading with Animation */}
         <motion.h1
           className="text-5xl font-extrabold text-center text-white mb-8"
           initial={{ opacity: 0, y: -20 }}
@@ -18,176 +24,116 @@ export default function TermsOfService() {
         </motion.h1>
 
         {/* Introduction */}
-        <p className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto">
-          Welcome to **Care Mantra Health**. By accessing or using our website,  
-          you agree to comply with our Terms of Service. Please read them carefully.
-        </p>
+        <motion.p
+          className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          Welcome to <strong>Care Mantra Health</strong>. These Terms of Service outline the rules and regulations
+          for using our platform. By accessing or using our website, you agree to comply with these terms.
+        </motion.p>
 
-        {/* Acceptance of Terms */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+        {/* Content Sections */}
+        {showContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
+            className="mt-12 space-y-12"
           >
-            ✅ Acceptance of Terms
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            By using **Care Mantra Health**, you agree to follow these terms.  
-            If you **do not agree**, please do not use our services.
-          </p>
-        </div>
+            {/* Acceptance of Terms */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">✅ Acceptance of Terms</h2>
+              <p className="text-gray-400 text-lg">
+                By using <strong>Care Mantra Health</strong>, you acknowledge and agree to abide by our terms.
+                If you do not agree with any part of these terms, please refrain from using our services.
+              </p>
+            </motion.div>
 
-        {/* Changes to Terms */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🔄 Changes to Terms
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We may update these terms from time to time.  
-            We will notify users about major changes through email or website notifications.
-          </p>
-        </div>
+            {/* Changes to Terms */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">🔄 Changes to Terms</h2>
+              <p className="text-gray-400 text-lg">
+                We reserve the right to modify these terms at any time. Users will be notified of significant updates
+                via email or website notifications. Continued use of the platform after changes means you accept
+                the new terms.
+              </p>
+            </motion.div>
 
-        {/* User Accounts */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            👤 User Accounts & Responsibilities
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            Users may create an account using **Google OAuth**.  
-            You are responsible for maintaining your account security.
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>✅ You must provide **accurate** information.</li>
-            <li>✅ You are responsible for **your activity** on the website.</li>
-            <li>✅ You **cannot share** your account with others.</li>
-          </ul>
-        </div>
+            {/* User Responsibilities */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">👤 User Responsibilities</h2>
+              <p className="text-gray-400 text-lg">
+                Users must provide accurate information when registering and are responsible for maintaining the
+                security of their accounts. Any suspicious or unauthorized activity should be reported immediately.
+              </p>
+            </motion.div>
 
-        {/* Prohibited Activities */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🚫 Prohibited Activities
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            Users are prohibited from engaging in activities including:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>❌ Spamming or harassing other users.</li>
-            <li>❌ Posting false or misleading information.</li>
-            <li>❌ Attempting to hack, disrupt, or modify our services.</li>
-            <li>❌ Uploading malicious code or viruses.</li>
-            <li>❌ Violating **intellectual property rights**.</li>
-          </ul>
-        </div>
+            {/* Prohibited Activities */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.9 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">🚫 Prohibited Activities</h2>
+              <ul className="list-disc pl-6 text-gray-400">
+                <li>Spamming, harassing, or misleading users.</li>
+                <li>Uploading viruses or malicious software.</li>
+                <li>Unauthorized access to other accounts.</li>
+                <li>Violating any local or international laws.</li>
+              </ul>
+            </motion.div>
 
-        {/* Content Ownership */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            ✍️ Content Ownership & Copyright
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            Any content **you post** (comments, reviews, articles) remains **yours**,  
-            but by posting, you grant us a **license to display** it.
-          </p>
-          <p className="mt-4 text-gray-400">
-            All website content (articles, designs, branding) belongs to **Care Mantra Health**  
-            and **cannot be copied or reused** without permission.
-          </p>
-        </div>
+            {/* Content Ownership */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">✍️ Content Ownership</h2>
+              <p className="text-gray-400 text-lg">
+                Users retain ownership of the content they post but grant <strong>Care Mantra Health</strong>
+                a license to display it. Website content cannot be copied without permission.
+              </p>
+            </motion.div>
 
-        {/* Disclaimer of Liability */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            ⚠️ Disclaimer of Liability
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We provide health blogs and news for **informational purposes only**.  
-            **We are not responsible** for any decisions made based on our content.
-          </p>
-        </div>
-
-        {/* Termination of Accounts */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🚀 Account Suspension & Termination
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            We reserve the right to suspend or terminate accounts for:
-          </p>
-          <ul className="list-disc pl-6 text-gray-400">
-            <li>❌ Violating our Terms of Service.</li>
-            <li>❌ Engaging in illegal activities.</li>
-            <li>❌ Misusing our platform.</li>
-          </ul>
-        </div>
-
-        {/* Governing Law */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            ⚖️ Governing Law
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            These terms are governed by the laws of **India**.  
-            Any legal disputes will be handled in **Indian courts**.
-          </p>
-        </div>
-
-        {/* Contact Information */}
-        <div className="mt-12">
-          <motion.h2
-            className="text-3xl font-bold text-white mb-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            📩 Contact Us
-          </motion.h2>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            If you have any questions about these Terms, contact us at:
-          </p>
-          <p className="text-blue-500 mt-2 text-lg">
-            <a href="mailto:support@caremantrahealth.com" className="hover:underline">support@caremantrahealth.com</a>
-          </p>
-        </div>
-
+            {/* Contact Information */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 1.5 }}
+              className="bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 className="text-3xl font-bold text-white mb-4">📩 Contact Us</h2>
+              <p className="text-gray-400 text-lg">
+                If you have any concerns or questions regarding these terms, reach out to us at:
+              </p>
+              <p className="text-blue-500 mt-2 text-lg">
+                <a href="mailto:support@caremantrahealth.com" className="hover:underline">
+                  support@caremantrahealth.com
+                </a>
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   );

@@ -8,9 +8,43 @@ const ArticleSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      default: "Untitled Article",
+      default: function () {
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit", // Include seconds for additional granularity
+        }).format(new Date());
+        const randomString = Math.random().toString(36).substring(2, 8); // Generates a short random string
+        return `Your amazing article starts here - ${formattedDate} - ${randomString}`;
+      },
     },
-    slug: { type: String, required: true, unique: true, default: "draft-slug" },
+    
+    
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      default: () => {
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit", // Include seconds
+        })
+          .format(new Date())
+          .replace(/ /g, "-");
+        const randomString = Math.random().toString(36).substring(2, 8); // Generates a short random string
+        return `awesome-slug-${formattedDate}-${randomString}`;
+      },
+    },
+    
+    
+    
     metaTitle: {
       type: String,
       required: true,
@@ -34,17 +68,41 @@ const ArticleSchema = new Schema(
       type: String,
       required: true,
       index: true,
+      enum: [
+        "Cardiology",
+        "Orthopedics",
+        "Gastroenterology",
+        "Pediatrics",
+        "Gynecology",
+        "Urology",
+        "Pulmonology",
+        "Ophthalmology",
+        "ENT",
+        "Nephrology",
+        "Endocrinology",
+        "Rheumatology",
+        "Nutrition & Diet",
+        "Mental Health",
+        "New Mom Tips",
+        "Lifestyle",
+        "Dermatology",
+        "Oncology",
+        "Fertility Health"
+      ],
       default: "Uncategorized",
     },
+    
+    
+    
     tags: { type: [String], index: true, default: ["default", "tags"] },
     featuredImage: {
       type: String,
       required: true,
-      default: "https://example.com/default-featured-image.jpg",
+      default: "/placeholder.jpg",
     },
     thumbnail: {
       type: String,
-      default: "https://example.com/default-thumbnail.jpg",
+      default: "/placeholder.jpg",
     },
     status: { type: String, enum: ["draft", "published"], default: "draft" },
     views: { type: Number, default: 0 },

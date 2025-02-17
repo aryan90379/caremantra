@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Bounce } from "react-toastify";
 import { usePathname } from "next/navigation";
 import DynamicContentEditor from "./DynamicContentEditor";
+import { FaSave } from "react-icons/fa";
 import {
   FaLink,
   FaEye,
@@ -17,6 +18,19 @@ import {
   FaRocket,
 } from "react-icons/fa";
 import DateTimePicker from "./DateTimePicker";
+
+const Minbutton = () => {
+  return (
+    <button
+      type="submit"
+      className="group my-3 relative inline-flex items-center gap-2 overflow-hidden rounded-lg border-2 border-blue-500 dark:border-purple-500 bg-blue-500 dark:bg-purple-500 px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:-translate-x-1 hover:-translate-y-1 hover:scale-105 hover:bg-blue-600 dark:hover:bg-purple-600 hover:shadow-blue-500/50 dark:hover:shadow-purple-500/50 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-purple-800"
+    >
+      <span className="absolute inset-0 animate-pulse opacity-20 blur-md bg-gradient-to-r from-blue-400 to-purple-500"></span>
+      <FaSave className="relative text-white text-xl group-hover:rotate-12 transition-transform duration-300" />
+      <span className="relative">Save Changes</span>
+    </button>
+  );
+};
 
 const EditArticle = () => {
   const [article, setArticle] = useState({});
@@ -146,15 +160,34 @@ const EditArticle = () => {
                     <option value="draft">Draft</option>
                     <option value="published">Published</option>
                   </select>
+                ) : field === "title" ? (
+                  <>
+                    <input
+                      name={field}
+                      value={article[field] || ""}
+                      onChange={handleChange}
+                      type="text"
+                      maxLength={160}
+                      className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                    />
+                    <div className="flex flex-col gap-1">
+                      <p>Current Url: {article.slug}</p>
+
+                      <Minbutton />
+                    </div>
+                  </>
                 ) : field === "metaDescription" ? (
-                  <input
-                    name={field}
-                    value={article[field] || ""}
-                    onChange={handleChange}
-                    type="text"
-                    maxLength={160}
-                    className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
-                  />
+                  <>
+                    <input
+                      name={field}
+                      value={article[field] || ""}
+                      onChange={handleChange}
+                      type="text"
+                      maxLength={160}
+                      className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                    />
+                    <Minbutton />
+                  </>
                 ) : field === "readingTime" ? (
                   <div className="flex flex-col items-center relative w-full">
                     <div className="relative w-full">
@@ -193,14 +226,45 @@ const EditArticle = () => {
                       handleChange({ target: { name: field, value: newValue } })
                     }
                   />
-                ) : (
-                  <input
+                ) : field === "category" ? (
+                  <select
                     name={field}
                     value={article[field] || ""}
                     onChange={handleChange}
-                    type="text"
                     className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
-                  />
+                  >
+                    <option value="Uncategorized">Select Category</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Gastroenterology">Gastroenterology</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="Gynecology">Gynecology</option>
+                    <option value="Urology">Urology</option>
+                    <option value="Pulmonology">Pulmonology</option>
+                    <option value="Ophthalmology">Ophthalmology</option>
+                    <option value="ENT">ENT</option>
+                    <option value="Nephrology">Nephrology</option>
+                    <option value="Endocrinology">Endocrinology</option>
+                    <option value="Rheumatology">Rheumatology</option>
+                    <option value="Nutrition & Diet">Nutrition & Diet</option>
+                    <option value="Mental Health">Mental Health</option>
+                    <option value="New Mom Tips">New Mom Tips</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Oncology">Oncology</option>
+                    <option value="Fertility Health">Fertility Health</option>
+                  </select>
+                ) : (
+                  <>
+                    <input
+                      name={field}
+                      value={article[field] || ""}
+                      onChange={handleChange}
+                      type="text"
+                      className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                    />
+                    <Minbutton />
+                  </>
                 )}
               </div>
             ))}

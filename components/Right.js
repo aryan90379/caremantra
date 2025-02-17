@@ -5,17 +5,27 @@ import { motion, LazyMotion, domAnimation } from "framer-motion";
 import DisplayBlogs from "./Blogs";
 
 const categories = [
-  { name: "Mental Health", icon: "🧠" },
-  { name: "Fitness & Exercise", icon: "🏋️" },
-  { name: "Nutrition", icon: "🥗" },
-  { name: "Yoga & Meditation", icon: "🧘" },
-  { name: "Weight Loss", icon: "⚖️" },
-  { name: "Healthy Recipes", icon: "🍎" },
-  { name: "Sleep & Recovery", icon: "😴" },
-  { name: "Heart Health", icon: "❤️" },
-  { name: "Skincare & Beauty", icon: "💆" },
-  { name: "Gut Health", icon: "🦠" },
+  { name: "Cardiology", icon: "❤️", link: "/blogs/categories/cardiology" },
+  { name: "Orthopedics", icon: "🦴", link: "/blogs/categories/orthopedics" },
+  { name: "Gastroenterology", icon: "🦠", link: "/blogs/categories/gastroenterology" },
+  { name: "Pediatrics", icon: "👶", link: "/blogs/categories/pediatrics" },
+  { name: "Gynecology", icon: "👩‍⚕️", link: "/blogs/categories/gynecology" },
+  { name: "Urology", icon: "💧", link: "/blogs/categories/urology" },
+  { name: "Pulmonology", icon: "🌬️", link: "/blogs/categories/pulmonology" },
+  { name: "Ophthalmology", icon: "👁️", link: "/blogs/categories/ophthalmology" },
+  { name: "ENT", icon: "👂", link: "/blogs/categories/ent" },
+  { name: "Nephrology", icon: "💊", link: "/blogs/categories/nephrology" },
+  { name: "Endocrinology", icon: "🔬", link: "/blogs/categories/endocrinology" },
+  { name: "Rheumatology", icon: "🦵", link: "/blogs/categories/rheumatology" },
+  { name: "Nutrition & Diet", icon: "🥗", link: "/blogs/categories/nutrition-&-diet" },
+  { name: "Mental Health", icon: "🧠", link: "/blogs/categories/mental-health" },
+  { name: "New Mom Tips", icon: "🤱", link: "/blogs/categories/new-mom-tips" },
+  { name: "Lifestyle", icon: "🌟", link: "/blogs/categories/lifestyle" },
+  { name: "Dermatology", icon: "🧴", link: "/blogs/categories/dermatology" },
+  { name: "Oncology", icon: "🎗️", link: "/blogs/categories/oncology" },
+  { name: "Fertility Health", icon: "🍼", link: "/blogs/categories/fertility-health" },
 ];
+
 
 const Right = () => {
   return (
@@ -24,14 +34,14 @@ const Right = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="p-6 bg-white/90 dark:bg-gray-900 rounded-2xl  backdrop-blur-md  border-gray-200 dark:border-gray-700"
+        className="  dark:bg-gray-900 rounded-2xl  backdrop-blur-md  border-gray-200 dark:border-gray-700"
       >
         {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="text-xl font-bold text-gray-900 dark:text-white mb-5 tracking-wide"
+          className="text-xl mt-10 font-bold text-gray-900 dark:text-white mb-5 tracking-wide"
         >
           🚀 Explore Categories
         </motion.h2>
@@ -46,8 +56,8 @@ const Right = () => {
               transition={{ duration: 0.3, delay: index * 0.05 }}
             >
               <a
-                href="#"
-                className="flex items-center gap-4 px-5 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 transition duration-300 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-600 group shadow-md"
+                href={category.link}
+                className="flex items-center gap-4 px-5 py-3 rounded-xl bg-white dark:bg-gray-700 transition duration-300 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-600 group shadow-md"
               >
                 <motion.span
                   whileHover={{ scale: 1.2 }}
@@ -72,7 +82,7 @@ const Right = () => {
           Related Articles
         </motion.h2>
 
-        <DisplayBlogs aside = {true}/>
+        <DisplayBlogs aside={true} />
       </motion.aside>
     </LazyMotion>
   );

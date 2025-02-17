@@ -1,160 +1,107 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Typewriter } from "react-simple-typewriter";
 import Link from "next/link";
 
 export default function AboutPage() {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowContent(true), 2000);
+  }, []);
+
   return (
-    <section className="text-gray-300 bg-gray-900 dark:bg-black body-font">
+    <section className="relative body-font text-gray-100 dark:text-gray-200 overflow-hidden">
+      {/* Background Styling */}
+      <div className="absolute inset-0 -z-10 h-full w-full bg-gradient-to-b from-blue-900 to-purple-900 dark:from-black dark:to-gray-900"></div>
       
       {/* About Section */}
-      <div className="container mx-auto px-5 py-24">
+      <div className="container mx-auto px-6 py-24 text-center">
         <motion.h1
-          className="text-5xl font-extrabold text-center text-white mb-8"
+          className="text-6xl font-extrabold text-white mb-10"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          About Us
+          <Typewriter words={["About Us", "Our Mission & Vision", "Care Mantra Health"]} loop={true} cursor cursorStyle="|" typeSpeed={50} />
         </motion.h1>
-        <p className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto">
-          Welcome to **Care Mantra Health**, your go-to platform for **trusted health news, wellness tips, and expert medical insights**.  
-          Our mission is to provide **accurate, up-to-date, and reliable health information** to help you make informed decisions about your well-being.
-        </p>
-        <div className="mt-6 text-center">
-          <p className="text-gray-400 max-w-4xl mx-auto">
-            Our team of **health professionals, medical writers, and fitness experts** curate content that covers **nutrition, mental health, disease prevention, medical research, and lifestyle improvements**.  
-            Whether you're looking for the latest breakthroughs in medicine, daily wellness hacks, or in-depth articles on specific health conditions, we've got you covered.
-          </p>
-        </div>
-      </div>
-
-      {/* Explore Blogs Section */}
-      <div className="container mx-auto flex flex-wrap py-24 items-center">
-        <div className="w-full lg:w-1/2 px-6 text-center lg:text-left">
-          <motion.h2
-            className="text-4xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🚀 Explore Blogs
-          </motion.h2>
-          <p className="text-lg leading-relaxed text-gray-400">
-            Stay ahead with the **latest health trends, expert opinions, and medical news**.  
-            Our blogs are carefully researched and written by industry professionals to give you the most **accurate and insightful information**.
-          </p>
-          <motion.div
-            className="mt-6"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <Link
-              href="/blogs"
-              className="inline-block px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition"
-            >
-              Read Our Blogs
-            </Link>
-          </motion.div>
-        </div>
-        <div className="w-full lg:w-1/2 px-6 mt-12 lg:mt-0">
-          <motion.img
-            src="/images/blogs.jpg"
-            alt="Health Blogs"
-            className="w-full rounded-lg shadow-lg"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-          />
-        </div>
-      </div>
-
-      {/* Explore Daily Health Section */}
-      <div className="container mx-auto flex flex-wrap py-24 items-center flex-col-reverse lg:flex-row">
-        <div className="w-full lg:w-1/2 px-6 mt-12 lg:mt-0">
-          <motion.img
-            src="/images/daily-health.jpg"
-            alt="Daily Health Tips"
-            className="w-full rounded-lg shadow-lg"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-          />
-        </div>
-        <div className="w-full lg:w-1/2 px-6 text-center lg:text-left">
-          <motion.h2
-            className="text-4xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-            🌿 Explore Daily Health
-          </motion.h2>
-          <p className="text-lg leading-relaxed text-gray-400">
-            Start your day with **simple, effective, and research-backed health tips**.  
-            Our daily health section provides **easy-to-follow wellness advice, diet recommendations, and fitness insights** to help you stay on track.
-          </p>
-          <motion.div
-            className="mt-6"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <Link
-              href="/daily-health"
-              className="inline-block px-6 py-3 text-lg font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition"
-            >
-              Discover Daily Tips
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Founders Section */}
-      <div className="container px-5 py-24 mx-auto">
-        <motion.h2
-          className="text-white text-center text-4xl font-bold mb-10"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+        <motion.p
+          className="text-xl leading-relaxed max-w-4xl mx-auto text-gray-300"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
         >
-          Meet Our Founders
-        </motion.h2>
-        <div className="flex flex-wrap -m-4 justify-center">
-          <motion.div
-            className="p-4 w-full md:w-1/3 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2 }}
-          >
-            <img
-              alt="founder"
-              className="w-32 h-32 mb-4 object-cover object-center rounded-full mx-auto border-2 border-gray-800"
-              src="/founder1.jpg"
-            />
-            <h3 className="text-white font-medium text-lg">Your Name</h3>
-            <p className="text-gray-500">Co-Founder & Visionary</p>
-            <p className="mt-2">Passionate about innovation and bringing creative ideas to life.</p>
-          </motion.div>
-          <motion.div
-            className="p-4 w-full md:w-1/3 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-          >
-            <img
-              alt="founder"
-              className="w-32 h-32 mb-4 object-cover object-center rounded-full mx-auto border-2 border-gray-800"
-              src="/founder2.jpg"
-            />
-            <h3 className="text-white font-medium text-lg">Other Founder</h3>
-            <p className="text-gray-500">Co-Founder & Strategist</p>
-            <p className="mt-2">Dedicated to driving success and shaping the future of the brand.</p>
-          </motion.div>
-        </div>
+          Welcome to <span className="text-blue-300 font-semibold">Care Mantra Health</span>, your trusted source for reliable health insights, wellness guidance, and expert medical knowledge. Our mission is to bridge the gap between complex medical information and everyday individuals, providing clarity and confidence in making informed health decisions.
+        </motion.p>
       </div>
 
+      {showContent && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="container mx-auto space-y-16 py-24 px-6"
+        >
+          {/* Explore Blogs Section */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="text-center"
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">🚀 Explore Our Blogs</h2>
+            <p className="text-lg leading-relaxed text-gray-300">
+              Stay ahead with the latest developments in healthcare, wellness trends, and expert insights. Our blogs are meticulously curated to keep you informed and empowered, covering a vast spectrum of health topics including nutrition, mental health, disease prevention, fitness, and medical advancements. 
+            </p>
+            <motion.div
+              className="mt-6"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <Link
+                href="/blogs"
+                className="inline-block px-8 py-3 text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 transition"
+              >
+                Read Our Blogs
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Our Mission Section */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="text-center"
+          >
+            <h2 className="text-4xl font-bold text-blue-300 mb-6">🌍 Our Mission</h2>
+            <p className="text-lg text-gray-300 leading-relaxed">
+              At <span className="text-blue-300 font-semibold">Care Mantra Health</span>, we are dedicated to enhancing the well-being of individuals by providing evidence-based health information that is easy to understand, trustworthy, and accessible to all. Our vision is to empower people to lead healthier, happier lives through accurate knowledge, expert insights, and actionable wellness strategies.
+            </p>
+            <p className="text-lg text-gray-300 leading-relaxed mt-4">
+              We believe that knowledge is power, and our goal is to make complex medical information easy to digest. From preventive healthcare tips to managing chronic conditions, we cover a wide range of topics to help you take control of your health and make well-informed decisions.
+            </p>
+          </motion.div>
+
+          {/* Founders Section
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="text-center"
+          >
+            <h2 className="text-4xl font-bold text-white mb-6">👥 Meet Our Founders</h2>
+            <p className="text-lg text-gray-300 mb-2">🔹 <span className="text-blue-300 font-semibold">Aryan Meena</span> - Co-Founder & Visionary</p>
+            <p className="text-lg text-gray-300">🔹 <span className="text-blue-300 font-semibold">Avaddesh Meena</span> - Co-Founder & Strategist</p>
+            <p className="text-lg text-gray-300 leading-relaxed mt-4">
+              Aryan and Avaddesh Meena founded Care Mantra Health with a passion for making healthcare knowledge accessible to everyone. With backgrounds in health sciences and technology, they have combined their expertise to create a platform that brings together medical professionals, wellness experts, and trusted resources to help individuals make informed decisions about their health.
+            </p>
+          </motion.div> */}
+        </motion.div>
+      )}
     </section>
   );
 }

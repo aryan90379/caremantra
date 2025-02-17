@@ -18,7 +18,7 @@ export default function CookiePolicyPage() {
           Cookie Policy
         </motion.h1>
         <p className="text-lg text-center text-gray-400 leading-relaxed max-w-3xl mx-auto">
-          This Cookie Policy explains how **Care Mantra Health** uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are, why we use them, and your rights to control their usage.
+          This Cookie Policy explains how <span className="font-bold text-white"> Care Mantra Health</span> uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are, why we use them, and your rights to control their usage.
         </p>
       </div>
 

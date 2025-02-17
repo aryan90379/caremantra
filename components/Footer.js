@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import {
   FaTwitter,
@@ -57,7 +58,7 @@ const Footer = () => {
             </motion.div>
 
             <p className="mt-4 flex md:justify-normal justify-center text-gray-500 dark:text-gray-400">
-              Your Trusted Guide to a Healthier Tomorrow
+              <Typewriter words={["Your Trusted Guide to a Healthier Tomorrow"]} loop={1} cursor cursorStyle="|" typeSpeed={50} />
             </p>
 
             <motion.div
