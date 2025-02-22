@@ -28,6 +28,10 @@ const Navbar = () => {
     getData();
   }, []);
 
+
+  const currentTime = new Date();
+
+
   const renderInfoDropdown = () => (
     <ul className="md:py-2 text-xl md:text-sm text-gray-900 dark:text-gray-200">
       {["About", "Privacy Policy", "Terms of Service", "Cookie Policy"].map(
@@ -308,7 +312,12 @@ const Navbar = () => {
                         (article) => article.status === "published"
                       ).length > 0 ? (
                         filteredArticles
-                          .filter((article) => article.status === "published")
+                          .filter((article) => {
+                            const publishedAt = new Date(article.publishedAt);
+                            return (
+                              article.status === "published" && publishedAt < currentTime
+                            );
+                          })
                           .slice(0, 10)
                           .map((article, idx) => (
                             <Link
@@ -523,7 +532,12 @@ const Navbar = () => {
                 {isFocused && (
                   <div className="absolute llg:hidden   top-full z-[9999] mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
                     {filteredArticles.length > 0 ? (
-                      filteredArticles.slice(0, 10).map((article, idx) => (
+                      filteredArticles.filter((article) => {
+                        const publishedAt = new Date(article.publishedAt);
+                        return (
+                          article.status === "published" && publishedAt < currentTime
+                        );
+                      }).slice(0, 10).map((article, idx) => (
                         <Link
                           href={`/blogs/${article.slug}`}
                           key={idx}
@@ -768,7 +782,7 @@ const Navbar = () => {
                   <>
                     <li>
                       <Link
-                        href="/admin/dashboard"
+                        href="/admin/articles/dashboard"
                         className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
             ${
               pathname === "/admin/dashboard"

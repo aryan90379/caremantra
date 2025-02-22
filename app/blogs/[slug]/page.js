@@ -1,4 +1,4 @@
-import Blog from "@/components/Blog";
+import {Blog} from "@/components/Blog";
 import DisplayBlogs from "@/components/Blogs";
 // import Comments from "@/components/Comments";
 const page = () => {

@@ -253,3 +253,38 @@ export const updateViewCount = async (slug) => {
     throw error;
   }
 };
+
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+// Function to scrape the website
+export const scrapeWebsite = async (url) => {
+  try {
+    // Send a GET request to the URL
+    const { data } = await axios.get(url);
+
+    // Load the HTML into Cheerio
+    const $ = cheerio.load(data);
+
+    // Example: Scrape the title of the page
+    const pageTitle = $('title').text();
+
+    // Scrape the content of the article by extracting all paragraph <p> tags
+    const articleContent = [];
+    $('p').each((index, element) => {
+      const paragraph = $(element).text().trim();
+      if (paragraph) {
+        articleContent.push(paragraph);
+      }
+    });
+
+    // Return the results as an object
+    return {
+      title: pageTitle,
+      content: articleContent.join('\n\n'), // Join paragraphs with two newlines for readability
+    };
+  } catch (error) {
+    console.error('Error scraping the website:', error);
+    return null; // Return null in case of an error
+  }
+};
