@@ -118,7 +118,7 @@ const DisplayArticles = () => {
 
                       {/* Button text */}
                       <span className="relative text-sm font-medium text-indigo-600 transition-colors duration-300 ease-in-out group-hover:text-white dark:text-indigo-400 dark:group-hover:text-white">
-                        Edit
+                        Edit 
                         {/* SVG icon */}
                         <svg
                           className="w-4 h-4 ml-2 inline-block transition-transform duration-300 ease-in-out group-hover:translate-x-1 group-hover:rotate-90"

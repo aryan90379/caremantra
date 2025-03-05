@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/cache"; // ✅ Import for cache invalidation
 import { redirect } from "next/navigation";
 const { ObjectId } = mongoose.Types; // Access ObjectId from Mongoose
-
+import SectionViews from "@/models/SectionViews";
 // export const fetchArticle = async (title) => {
 //     try {
 //       await connectToDatabase();
@@ -30,6 +30,15 @@ export const fetchArticles = async () => {
   await connectToDatabase();
   let articles = await Article.find({});
   return articles.map((article) => JSON.parse(JSON.stringify(article)));
+};
+
+
+export const fetchSectionViews = async () => {
+  await connectToDatabase(); // Connect to MongoDB
+
+  const sections = await SectionViews.find({}); // Fetch all sections
+
+  return sections.map((section) => JSON.parse(JSON.stringify(section))); // Convert to plain objects
 };
 
 // export const updateArticle = async()=>{
@@ -286,5 +295,31 @@ export const scrapeWebsite = async (url) => {
   } catch (error) {
     console.error('Error scraping the website:', error);
     return null; // Return null in case of an error
+  }
+};
+
+
+
+//update the views of a particular section
+
+
+
+export const updateSectionViews = async (section) => {
+  try {
+    await connectToDatabase(); // Connect to MongoDB
+
+    // Find the section by name and increment the views count
+    const updatedSection = await SectionViews.findOneAndUpdate(
+      { section },
+      { $inc: { views: 1 } },
+      { new: true, upsert: true } // Create if not exists
+    );
+
+    console.log(`Updated views count for section "${section}":`, updatedSection.views);
+
+    return updatedSection.views; // Return the updated views count
+  } catch (error) {
+    console.error("Error updating section views:", error);
+    throw error;
   }
 };

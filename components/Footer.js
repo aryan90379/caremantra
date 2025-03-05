@@ -58,7 +58,13 @@ const Footer = () => {
             </motion.div>
 
             <p className="mt-4 flex md:justify-normal justify-center text-gray-500 dark:text-gray-400">
-              <Typewriter words={["Your Trusted Guide to a Healthier Tomorrow"]} loop={1} cursor cursorStyle="|" typeSpeed={50} />
+              <Typewriter
+                words={["Your Trusted Guide to a Healthier Tomorrow"]}
+                loop={1}
+                cursor
+                cursorStyle="|"
+                typeSpeed={50}
+              />
             </p>
 
             <motion.div
@@ -69,27 +75,27 @@ const Footer = () => {
             >
               {[
                 {
-                  href: "https://twitter.com",
+                  href: "https://x.com/Caremantrahelth?t=bunMPfaWQqiUC5TgyMLfEA&s=09",
                   icon: <FaTwitter />,
                   color: "#1DA1F2",
                 },
                 {
-                  href: "https://linkedin.com",
+                  href: "https://www.linkedin.com/in/caremantra-health-7b3492255?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                   icon: <FaLinkedin />,
                   color: "#0077B5",
                 },
                 {
-                  href: "https://wa.me",
+                  href: "https://whatsapp.com/channel/0029VapOOK52Jl8HMUYYGG3w",
                   icon: <FaWhatsapp />,
                   color: "#25D366",
                 },
                 {
-                  href: "https://quora.com",
+                  href: "https://www.quora.com/profile/CareMantraHealth?ch=10&oid=2066029641&share=05a360cc&srid=hKYL7I&target_type=user",
                   icon: <FaQuora />,
                   color: "#B92B27",
                 },
                 {
-                  href: "https://instagram.com",
+                  href: "https://www.instagram.com/caremantrahealth/",
                   icon: <FaInstagram />,
                   color: "#E4405F",
                 },

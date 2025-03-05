@@ -155,17 +155,63 @@ const DynamicContentEditor = ({ value = "", onChange }) => {
             placeholder="List Items..."
           />
         );
-      case "image":
-        return (
-          <input
-            type="url"
-            className={`w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-800 ${block.color}`}
-            value={block.content}
-            onChange={(e) => handleChange(index, e.target.value)}
-            onBlur={handleBlur}
-            placeholder="Paste Image URL..."
-          />
-        );
+        case "image":
+          return (
+            <div className="flex flex-col gap-2">
+              <input
+                type="url"
+                className={`w-full p-2 rounded-lg border dark:border-gray-600 dark:bg-gray-800 ${block.color}`}
+                value={block.content}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onBlur={handleBlur}
+                placeholder="Paste Image URL or Upload Below..."
+              />
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full p-2 border rounded-lg dark:border-gray-600 dark:bg-gray-800"
+                onChange={async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) {
+                    alert("No file selected.");
+                    return;
+                  }
+        
+                  try {
+                    // Generate a random 15-character string as the identifier
+                    const randomId = Math.random().toString(36).substring(2, 17);
+        
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("id", randomId); // Attach the random ID
+        
+                    // Upload the file to the server
+                    const response = await fetch("/api/upload", {
+                      method: "POST",
+                      body: formData,
+                    });
+        
+                    if (!response.ok) {
+                      throw new Error("Failed to upload the image.");
+                    }
+        
+                    // Extract the file path from the response
+                    const { filePath } = await response.json();
+                    console.log("Image uploaded successfully:", filePath);
+        
+                    // Update the block content with the uploaded file path (URL)
+                    handleChange(index, filePath);
+        
+                    console.log("Random ID associated with the image:", randomId);
+                  } catch (error) {
+                    console.error("Error uploading the image:", error.message);
+                    alert("An error occurred: " + error.message);
+                  }
+                }}
+              />
+            </div>
+          );
+        
       case "code":
         return (
           <textarea

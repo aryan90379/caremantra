@@ -188,7 +188,131 @@ const EditArticle = () => {
                     />
                     <Minbutton />
                   </>
-                ) : field === "readingTime" ? (
+                ) : field === "thumbnail" ? (
+                  <>
+                    <div className="flex flex-col gap-2">
+                      {/* Input field for pasting image URL */}
+                      <input
+                        name={field}
+                        value={article[field] || ""}
+                        onChange={handleChange}
+                        type="text"
+                        maxLength={160}
+                        className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                        placeholder="Paste Image URL or Upload Below..."
+                      />
+                
+                      {/* File upload input */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) {
+                            alert("No file selected.");
+                            return;
+                          }
+                
+                          try {
+                            // Generate a random 15-character string as the identifier
+                            const randomId = Math.random().toString(36).substring(2, 17);
+                
+                            const formData = new FormData();
+                            formData.append("file", file);
+                            formData.append("id", randomId); // Attach the random ID
+                
+                            // Upload the file to the server
+                            const response = await fetch("/api/upload", {
+                              method: "POST",
+                              body: formData,
+                            });
+                
+                            if (!response.ok) {
+                              throw new Error("Failed to upload the image.");
+                            }
+                
+                            // Extract the file path from the response
+                            const { filePath } = await response.json();
+                            console.log("Image uploaded successfully:", filePath);
+                
+                            // Update the article's thumbnail field with the uploaded file path
+                            handleChange({ target: { name: field, value: filePath } });
+                
+                            console.log("Random ID associated with the image:", randomId);
+                          } catch (error) {
+                            console.error("Error uploading the image:", error.message);
+                            alert("An error occurred: " + error.message);
+                          }
+                        }}
+                      />
+                    </div>
+                    <Minbutton />
+                  </>
+                ) :
+                field === "featuredImage" ? (
+                  <>
+                    <div className="flex flex-col gap-2">
+                      {/* Input field for pasting image URL */}
+                      <input
+                        name={field}
+                        value={article[field] || ""}
+                        onChange={handleChange}
+                        type="text"
+                        maxLength={160}
+                        className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                        placeholder="Paste Image URL or Upload Below..."
+                      />
+                
+                      {/* File upload input */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="w-full p-3 border rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 ease-in-out shadow-sm"
+                        onChange={async (e) => {
+                          const file = e.target.files[0];
+                          if (!file) {
+                            alert("No file selected.");
+                            return;
+                          }
+                
+                          try {
+                            // Generate a random 15-character string as the identifier
+                            const randomId = Math.random().toString(36).substring(2, 17);
+                
+                            const formData = new FormData();
+                            formData.append("file", file);
+                            formData.append("id", randomId); // Attach the random ID
+                
+                            // Upload the file to the server
+                            const response = await fetch("/api/upload", {
+                              method: "POST",
+                              body: formData,
+                            });
+                
+                            if (!response.ok) {
+                              throw new Error("Failed to upload the image.");
+                            }
+                
+                            // Extract the file path from the response
+                            const { filePath } = await response.json();
+                            console.log("Image uploaded successfully:", filePath);
+                
+                            // Update the article's thumbnail field with the uploaded file path
+                            handleChange({ target: { name: field, value: filePath } });
+                
+                            console.log("Random ID associated with the image:", randomId);
+                          } catch (error) {
+                            console.error("Error uploading the image:", error.message);
+                            alert("An error occurred: " + error.message);
+                          }
+                        }}
+                      />
+                    </div>
+                    <Minbutton />
+                  </>
+                ) 
+                 : field === "readingTime" ? (
                   <div className="flex flex-col items-center relative w-full">
                     <div className="relative w-full">
                       <input
