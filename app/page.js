@@ -110,7 +110,7 @@ export default function Home() {
 
             {/* Explore Daily Health Button */}
 
-            <motion.a
+            {/* <motion.a
               href="/daily-health"
               className="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ml-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400 transition-all duration-200 shadow-lg"
               initial={{ opacity: 0, x: 20 }}
@@ -119,7 +119,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               Explore Daily Health
-            </motion.a>
+            </motion.a> */}
           </div>
         </div>
       </section>

@@ -147,33 +147,7 @@ const Footer = () => {
                     </span>
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/daily-health"
-                    className="group relative inline-flex items-center overflow-hidden rounded-md bg-indigo-600 px-6 py-2 text-white shadow-md transition-all duration-300 ease-in-out hover:bg-indigo-500 dark:bg-indigo-700 dark:hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-400 dark:focus:ring-indigo-500 focus:outline-none"
-                  >
-                    <span className="absolute -end-full transition-all duration-300 group-hover:end-4">
-                      <svg
-                        className="w-5 h-5 rtl:rotate-180 text-white dark:text-gray-200"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </span>
-
-                    <span className="text-sm font-medium transition-all duration-300 group-hover:me-4 dark:text-gray-100">
-                      Daily Health
-                    </span>
-                  </Link>
-                </li>
+              
               </ul>
             </div>
             <div>

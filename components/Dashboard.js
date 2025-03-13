@@ -7,7 +7,13 @@ import { FaArrowDown } from "react-icons/fa";
 const Dashboard = () => {
   const [articles, setArticles] = useState([]);
   const [totalViews, setTotalViews] = useState(0);
-  const [sectionViews, setSectionViews] = useState({ home: 0, blogs: 0 });
+  const [sectionViews, setSectionViews] = useState({
+    home: 0,
+    blogs: 0,
+    "bmi-calculator": 0,
+    "age-calculator": 0,
+    "unit-convertor": 0,
+  });
   const [viewMode, setViewMode] = useState("individual");
 
   useEffect(() => {
@@ -27,12 +33,21 @@ const Dashboard = () => {
           0
         );
         setTotalViews(totalArticleViews);
-
         const sections = await fetchSectionViews();
+        console.log(sections)
         const homeViews = sections.find((s) => s.section === "home")?.views || 0;
         const blogViews = sections.find((s) => s.section === "blogs")?.views || 0;
+        const bmiViews = sections.find((s) => s.section === "bmi-calculator")?.views || 0;
+        const ageViews = sections.find((s) => s.section === "age-calculator")?.views || 0;
+        const unitConvertorViews = sections.find((s) => s.section === "unit-convertor")?.views || 0;
 
-        setSectionViews({ home: homeViews, blogs: blogViews });
+        setSectionViews({
+          home: homeViews,
+          blogs: blogViews,
+          "bmi-calculator": bmiViews,
+          "age-calculator": ageViews,
+          "unit-convertor": unitConvertorViews,
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -105,6 +120,9 @@ const Dashboard = () => {
             <p className="text-lg dark:text-white">Total Article Views: {totalViews}</p>
             <p className="text-lg dark:text-white">Home Views: {sectionViews.home}</p>
             <p className="text-lg dark:text-white">Blogs Views: {sectionViews.blogs}</p>
+            <p className="text-lg dark:text-white">BMI Calculator Views: {sectionViews["bmi-calculator"]}</p>
+            <p className="text-lg dark:text-white">Age Calculator Views: {sectionViews["age-calculator"]}</p>
+            <p className="text-lg dark:text-white">Unit Convertor Views: {sectionViews["unit-convertor"]}</p>
           </div>
         )}
       </motion.div>

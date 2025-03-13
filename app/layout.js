@@ -5,7 +5,7 @@ import SessionWrapper from "@/components/SessionWrapper";
 import Footer from "@/components/Footer";
 import Head from "next/head";
 import Script from "next/script";
-
+import PushNotifications from "@/components/PushNotifications";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -52,6 +52,7 @@ export default function RootLayout({ children }) {
 
         <SessionWrapper>
           <Navbar />
+          <PushNotifications />
           <main className="pt-[7rem]">{children}</main>
           <Footer />
         </SessionWrapper>

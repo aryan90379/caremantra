@@ -323,3 +323,16 @@ export const updateSectionViews = async (section) => {
     throw error;
   }
 };
+
+import Subscriber from "@/models/Subscriber";
+
+export const getSubscriberCount = async () => {
+  try {
+    const count = await Subscriber.countDocuments();
+    return count;
+  } catch (error) {
+    console.error("❌ Error fetching subscriber count:", error);
+    throw new Error("Failed to fetch subscriber count");
+  }
+};
+

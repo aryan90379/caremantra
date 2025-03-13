@@ -33,7 +33,7 @@ const Navbar = () => {
 
 
   const renderInfoDropdown = () => (
-    <ul className="md:py-2 text-xl md:text-sm text-gray-900 dark:text-gray-200">
+    <ul className="md:py-2 text-xl md:text-sm  text-gray-900 dark:text-gray-200">
       {["About", "Privacy Policy", "Terms of Service", "Cookie Policy"].map(
         (item) => {
           const url = `/${item.toLowerCase().replace(/\s+/g, "-")}`;
@@ -57,22 +57,27 @@ const Navbar = () => {
   );
 
   const renderToolsDropdown = () => (
-    <ul className="py-2 text-xl font-medium pl-8  md:pl-0  md:text-sm text-gray-900 dark:text-gray-200">
-      {["Tool 1", "Tool 2", "Tool 3"].map((item) => (
-        <li key={item}>
-          <a
-            href="#"
-            className="block px-4 py-2 rounded-md transition-all duration-200 
-            hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
-            dark:hover:from-gray-700 dark:hover:to-gray-800 
-            hover:text-white dark:hover:text-gray-100"
-          >
-            {item}
-          </a>
-        </li>
-      ))}
+    <ul className="py-2 text-xl font-medium pl-8 md:pl-0 md:text-sm text-gray-900 dark:text-gray-200">
+      {["BMI Calculator", "Age Calculator", "Unit Converter"].map((item) => {
+        const formattedLink = item.toLowerCase().replace(/\s+/g, "-"); // Convert to kebab-case
+  
+        return (
+          <li key={item}>
+            <a
+              href={`/tools/${formattedLink}`}
+              className="block px-4 py-2 rounded-md transition-all duration-200 
+              hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
+              dark:hover:from-gray-700 dark:hover:to-gray-800 
+              hover:text-white dark:hover:text-gray-100"
+            >
+              {item}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
+  
 
   const renderBlogDropdown = () => (
     <ul className="py-2 text-xl font-medium pl-8 md:text-sm md:pl-0 text-gray-900 dark:text-gray-200">
@@ -196,7 +201,7 @@ const Navbar = () => {
   return (
     <>
       <LoginPrompt />
-      <nav className="z-20  fixed top-0 left-0 right-0 max-h-fit bg-white dark:bg-gray-950">
+      <nav className="z-20  fixed top-0 left-0 right-0 max-h-fit bg-white dark:bg-black">
         <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-3 pt-2 pb-2 md:pb-3  md:p-4">
           <Link
             href="/"
@@ -432,10 +437,10 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                   <Link
-                                    href="/earnings"
+                                    href="/admin/notifications"
                                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                    Comments
+                                    Notifications
                                   </Link>
                                 </li>
                               </ul>
@@ -690,7 +695,7 @@ const Navbar = () => {
               )}
 
               {/* Daily Health */}
-              <li>
+              {/* <li>
                 <Link
                   href="/daily-health"
                   className={`block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
@@ -704,7 +709,7 @@ const Navbar = () => {
                 >
                   Daily Health
                 </Link>
-              </li>
+              </li> */}
 
               {/* Tools */}
               {/* Tools List Item */}
@@ -812,7 +817,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <Link
-                        href="/earnings"
+                        href="/admin/notifications"
                         className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
             ${
               pathname === "/earnings"
@@ -822,7 +827,7 @@ const Navbar = () => {
           `}
                         onClick={toggleNav}
                       >
-                        Comments
+                        Notifications
                       </Link>
                     </li>
                   </>

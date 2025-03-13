@@ -4,7 +4,7 @@ import { fetchArticleTitle } from "@/actions/useractions";
 import { usePathname } from "next/navigation";
 import ShareButtons from "./sharedbuttons";
 import { motion } from "framer-motion";
-import ParseContent from "./ParseContent";
+import ParseContentServer from "./ParseContentServer";
 import Comments from "./Comments";
 import EditMessage from "./Editmessage";
 import Right from "./Right";
@@ -12,6 +12,7 @@ import Head from "next/head";
 import DisplayBlogs from "./Blogs";
 import { updateViewCount } from "@/actions/useractions";
 import LoadingSkeleton from "./Skeleton";
+import ToolsPage from "./ToolsPage";
 
 const SingleBlog = () => {
   const pathname = usePathname();
@@ -29,7 +30,7 @@ const SingleBlog = () => {
     slug: "",
   });
 
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (title) {
@@ -92,7 +93,7 @@ const SingleBlog = () => {
         <meta property="og:description" content={article.metaDescription} />
         <meta
           property="og:image"
-          content={`https://caremantrahealth.com${article.thumbnail}`}
+          content={`https://caremantrahealth.com${article.featuredImage}`}
         />
         <meta property="og:type" content="article" />
         <meta
@@ -107,7 +108,7 @@ const SingleBlog = () => {
         <meta name="twitter:description" content={article.metaDescription} />
         <meta
           name="twitter:image"
-          content={`https://caremantrahealth.com${article.thumbnail}`}
+          content={`https://caremantrahealth.com${article.featuredImage}`}
         />
         <link
           rel="canonical"
@@ -130,7 +131,7 @@ const SingleBlog = () => {
                 : undefined,
 
               mainEntityOfPage: `https://caremantrahealth.com/blogs/${article.slug}`,
-              image: article.thumbnail,
+              image: article.featuredImage,
               publisher: {
                 "@type": "Organization",
                 name: "Caremantrahealth.com",
@@ -140,7 +141,7 @@ const SingleBlog = () => {
                 },
               },
               // 🔥 ADD TAGS TO STRUCTURED DATA
-              keywords: article.tags || [],
+              keywords: article.keywords || [],
             }),
           }}
         />
@@ -155,7 +156,9 @@ const SingleBlog = () => {
           transition={{ duration: 0.8 }}
           className="lg:flex text-gray-600 dark:text-gray-300 body-font min-h-screen"
         >
-          <aside className="lg:w-1/5 lg:block hidden"></aside>
+          <aside className="lg:w-1/5 lg:block hidden">
+          <ToolsPage aside = {true}/>
+          </aside>
 
           <main className="lg:w-3/5 w-full pt-9 px-3 md:px-12">
             <motion.header
@@ -218,7 +221,7 @@ const SingleBlog = () => {
                     }
                   />
 
-                  <ParseContent value={article.content} />
+                  <ParseContentServer value={article.content} />
                 </>
               )}
             </motion.section>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import LoadingSkeleton from "./Skeleton";
 import { updateSectionViews } from "@/actions/useractions";
-// Animation Variants
+
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
