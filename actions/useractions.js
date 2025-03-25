@@ -32,7 +32,6 @@ export const fetchArticles = async () => {
   return articles.map((article) => JSON.parse(JSON.stringify(article)));
 };
 
-
 export const fetchSectionViews = async () => {
   await connectToDatabase(); // Connect to MongoDB
 
@@ -177,13 +176,12 @@ export const updateCommentByTitle = async (title, newCommentData) => {
 
     // Generate a unique ID for the new comment (if not provided)
     const newComment = {
-      
       by_user: newCommentData.by_user, // User's email or username
       onDate: new Date(), // Current date and time
       content: newCommentData.content, // The comment content
       profile: newCommentData.profile || "/default-avatar.png", // User's profile picture or default
       parentId: newCommentData.parentId || null, // Include to_user field (defaults to null if not provided)
-      childId: newCommentData.childId|| null, // Include to_user field (defaults to null if not provided)
+      childId: newCommentData.childId || null, // Include to_user field (defaults to null if not provided)
     };
 
     // Append the new comment to the article's comments array
@@ -199,8 +197,6 @@ export const updateCommentByTitle = async (title, newCommentData) => {
     throw error;
   }
 };
-
-
 
 // DELETE A PARTICULAR COMMENT
 export const deleteCommentById = async (title, commentId) => {
@@ -229,14 +225,14 @@ export const deleteCommentById = async (title, commentId) => {
     await article.save();
 
     // console.log("Comment deleted successfully:", commentId);
-    return { success: true };  // Return an object with success flag
+    return { success: true }; // Return an object with success flag
   } catch (error) {
     console.error("Error deleting comment by ID:", error);
-    return { success: false, message: error.message };  // Return failure status and error message
+    return { success: false, message: error.message }; // Return failure status and error message
   }
 };
 
-
+// Date Modified
 
 // view count
 export const updateViewCount = async (slug) => {
@@ -250,7 +246,7 @@ export const updateViewCount = async (slug) => {
       { new: true } // Return the updated document
     );
 
-    console.log("Updated views count:", article.views)
+    console.log("Updated views count:", article.views);
     if (!article) {
       throw new Error("Article not found");
     }
@@ -263,8 +259,8 @@ export const updateViewCount = async (slug) => {
   }
 };
 
-const axios = require('axios');
-const cheerio = require('cheerio');
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 // Function to scrape the website
 export const scrapeWebsite = async (url) => {
@@ -276,11 +272,11 @@ export const scrapeWebsite = async (url) => {
     const $ = cheerio.load(data);
 
     // Example: Scrape the title of the page
-    const pageTitle = $('title').text();
+    const pageTitle = $("title").text();
 
     // Scrape the content of the article by extracting all paragraph <p> tags
     const articleContent = [];
-    $('p').each((index, element) => {
+    $("p").each((index, element) => {
       const paragraph = $(element).text().trim();
       if (paragraph) {
         articleContent.push(paragraph);
@@ -290,19 +286,15 @@ export const scrapeWebsite = async (url) => {
     // Return the results as an object
     return {
       title: pageTitle,
-      content: articleContent.join('\n\n'), // Join paragraphs with two newlines for readability
+      content: articleContent.join("\n\n"), // Join paragraphs with two newlines for readability
     };
   } catch (error) {
-    console.error('Error scraping the website:', error);
+    console.error("Error scraping the website:", error);
     return null; // Return null in case of an error
   }
 };
 
-
-
 //update the views of a particular section
-
-
 
 export const updateSectionViews = async (section) => {
   try {
@@ -315,7 +307,10 @@ export const updateSectionViews = async (section) => {
       { new: true, upsert: true } // Create if not exists
     );
 
-    console.log(`Updated views count for section "${section}":`, updatedSection.views);
+    console.log(
+      `Updated views count for section "${section}":`,
+      updatedSection.views
+    );
 
     return updatedSection.views; // Return the updated views count
   } catch (error) {
@@ -336,3 +331,111 @@ export const getSubscriberCount = async () => {
   }
 };
 
+// contact us page ke comments
+import Contact from "@/models/Contact";
+export const fetchMessages = async (email, sentBy = "user") => {
+  try {
+    await connectToDatabase();
+
+    // Find the contact entry
+    const contact = await Contact.findOne({ email }).lean();
+    if (!contact) {
+      return { email, messages: [] };
+    }
+
+    // If fetched by admin and status is "unread", update it to "read"
+    if (sentBy === "admin" && contact.status === "unread") {
+      await Contact.updateOne({ email }, { $set: { status: "read" } });
+    }
+
+    // Convert Mongoose document to plain object and ensure proper formatting
+    return {
+      ...contact,
+      _id: contact._id.toString(),
+      messages: contact.messages.map((msg) => ({
+        ...msg,
+        _id: msg._id.toString(),
+        sentAt: msg.sentAt ? msg.sentAt.toISOString() : null,
+      })),
+    };
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+    throw error;
+  }
+};
+
+
+export async function createConnection(email, content, sentBy = "user", status = null) {
+  await connectToDatabase();
+
+  let contact = await Contact.findOne({ email });
+
+  if (!contact) {
+    contact = new Contact({ email, messages: [] });
+  }
+
+  // Ensure messages is an array before pushing
+  if (!Array.isArray(contact.messages)) {
+    contact.messages = [];
+  }
+
+  // New message object
+  const newMessage = {
+    content,
+    sentBy,
+    sentAt: new Date(),
+  };
+
+  // Append the message
+  contact.messages.push(newMessage);
+
+  // Automatically update status:
+  if (sentBy === "user") {
+    contact.status = "unread"; // User messages make it unread
+  } else if (sentBy === "admin" && status === "resolved") {
+    contact.status = "resolved"; // Admin can explicitly resolve it
+  } else if (sentBy === "admin") {
+    contact.status = "read"; // Admin responding means it's read
+  }
+
+  // Save the changes to the contact
+  await contact.save();
+
+  // Return the updated messages, keeping the format clean
+  return {
+    email: contact.email,
+    status: contact.status,
+    messages: contact.messages.map((msg) => ({
+      content: msg.content,
+      sentBy: msg.sentBy,
+      sentAt: msg.sentAt ? msg.sentAt.toISOString() : null,
+    })),
+  };
+}
+
+
+export const fetchAllContacts = async () => {
+  await connectToDatabase();
+
+  const contacts = await Contact.find({})
+    .sort({ updatedAt: -1 }) // Sort by latest message
+    .lean();
+
+  return contacts.map((contact) => {
+    const latestMessage = contact.messages.length
+      ? contact.messages[contact.messages.length - 1]
+      : null;
+
+    return {
+      email: contact.email,
+      latestMessage: latestMessage
+        ? {
+            content: latestMessage.content,
+            sentAt: latestMessage.sentAt.toISOString(),
+            sentBy: latestMessage.sentBy,
+          }
+        : null,
+      status: contact.status, // unread, read, resolved
+    };
+  });
+};

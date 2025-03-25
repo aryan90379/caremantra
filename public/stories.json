@@ -1,0 +1,18 @@
+[
+    {
+      "id": "tera",
+      "title": "Exploring Tera",
+      "coverImage": "/stories/tera-cover.jpg",
+      "slides": [
+        {
+          "image": "/stories/tera-slide1.jpg",
+          "text": "Tera is a fascinating world!"
+        },
+        {
+          "image": "/stories/tera-slide2.jpg",
+          "text": "It has vast landscapes!"
+        }
+      ]
+    }
+  ]
+  

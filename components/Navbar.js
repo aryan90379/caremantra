@@ -28,13 +28,11 @@ const Navbar = () => {
     getData();
   }, []);
 
-
   const currentTime = new Date();
-
 
   const renderInfoDropdown = () => (
     <ul className="md:py-2 text-xl md:text-sm  text-gray-900 dark:text-gray-200">
-      {["About", "Privacy Policy", "Terms of Service", "Cookie Policy"].map(
+      {["About Us", "Privacy Policy", "Terms of Service", "Cookie Policy","Contact Us","Chat Support"].map(
         (item) => {
           const url = `/${item.toLowerCase().replace(/\s+/g, "-")}`;
           return (
@@ -60,7 +58,7 @@ const Navbar = () => {
     <ul className="py-2 text-xl font-medium pl-8 md:pl-0 md:text-sm text-gray-900 dark:text-gray-200">
       {["BMI Calculator", "Age Calculator", "Unit Converter"].map((item) => {
         const formattedLink = item.toLowerCase().replace(/\s+/g, "-"); // Convert to kebab-case
-  
+
         return (
           <li key={item}>
             <a
@@ -77,7 +75,6 @@ const Navbar = () => {
       })}
     </ul>
   );
-  
 
   const renderBlogDropdown = () => (
     <ul className="py-2 text-xl font-medium pl-8 md:text-sm md:pl-0 text-gray-900 dark:text-gray-200">
@@ -87,7 +84,10 @@ const Navbar = () => {
         { name: "Gastroenterology", desc: "Digestive System" },
         { name: "Pediatrics", desc: "Children's Health" },
         { name: "Gynecology", desc: "Women's Health" },
-        { name: "Urology", desc: "Urinary System and Male Reproductive Health" },
+        {
+          name: "Urology",
+          desc: "Urinary System and Male Reproductive Health",
+        },
         { name: "Pulmonology", desc: "Respiratory System" },
         { name: "Ophthalmology", desc: "Eyes" },
         { name: "ENT", desc: "Ear, Nose, and Throat" },
@@ -95,7 +95,10 @@ const Navbar = () => {
         { name: "Endocrinology", desc: "Hormonal Disorders" },
         { name: "Rheumatology", desc: "Arthritis and Autoimmune Diseases" },
         { name: "Nutrition & Diet", desc: "Healthy Eating and Nutrition" },
-        { name: "Mental Health", desc: "Emotional and Psychological Well-being" },
+        {
+          name: "Mental Health",
+          desc: "Emotional and Psychological Well-being",
+        },
         { name: "New Mom Tips", desc: "Guidance for New Mothers" },
         { name: "Lifestyle", desc: "Health and Daily Living" },
         { name: "Dermatology", desc: "Skin and Hair Health" },
@@ -104,7 +107,9 @@ const Navbar = () => {
       ].map(({ name, desc }) => (
         <li key={name}>
           <a
-            href={`/blogs/categories/${name.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`/blogs/categories/${name
+              .toLowerCase()
+              .replace(/\s+/g, "-")}`}
             className="block px-4 py-2 rounded-md transition-all duration-200 
               hover:bg-gradient-to-r hover:from-purple-300 hover:to-pink-300 
               dark:hover:from-gray-700 dark:hover:to-gray-800 
@@ -121,9 +126,7 @@ const Navbar = () => {
       ))}
     </ul>
   );
-  
-  
-  
+
   const getData = async () => {
     const data = await fetchArticles();
     setArticles(data);
@@ -227,9 +230,8 @@ const Navbar = () => {
               style={{
                 fontFamily: "'Noto Sans JP', serif",
                 fontWeight: "900",
-                // fontSize: "1.5rem",
                 background:
-                  "linear-gradient(to right, #3b82f6, #a855f7, #ec4899)",
+                  "linear-gradient(to right, #16a34a, #10b981, #3b82f6)", // Green and Blue health-related gradient
                 WebkitBackgroundClip: "text",
                 color: "transparent",
               }}
@@ -320,7 +322,8 @@ const Navbar = () => {
                           .filter((article) => {
                             const publishedAt = new Date(article.publishedAt);
                             return (
-                              article.status === "published" && publishedAt < currentTime
+                              article.status === "published" &&
+                              publishedAt < currentTime
                             );
                           })
                           .slice(0, 10)
@@ -443,6 +446,14 @@ const Navbar = () => {
                                     Notifications
                                   </Link>
                                 </li>
+                                <li>
+                                  <Link
+                                    href="/admin/chats"
+                                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Chats
+                                  </Link>
+                                </li>
                               </ul>
                             )}
 
@@ -463,26 +474,31 @@ const Navbar = () => {
             <button
               onClick={toggleNav}
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              className="relative md:hidden w-10 h-10 flex items-center justify-center"
               aria-controls="navbar-search"
               aria-expanded={isNavOpen}
             >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
+              <span className="sr-only">Toggle menu</span>
+              <div className="relative w-6 h-6">
+                {/* Top Bar */}
+                <span
+                  className={`absolute w-6 h-0.5 bg-gray-500 dark:bg-gray-400 transition-all duration-300 ${
+                    isNavOpen ? "rotate-45 top-1/2" : "top-0"
+                  }`}
+                ></span>
+                {/* Middle Bar (Disappears) */}
+                <span
+                  className={`absolute w-6 h-0.5 bg-gray-500 dark:bg-gray-400 transition-all duration-200 ${
+                    isNavOpen ? "opacity-0 scale-0" : "top-1/2 -translate-y-1/2"
+                  }`}
+                ></span>
+                {/* Bottom Bar */}
+                <span
+                  className={`absolute w-6 h-0.5 bg-gray-500 dark:bg-gray-400 transition-all duration-300 ${
+                    isNavOpen ? "-rotate-45 top-1/2" : "bottom-0"
+                  }`}
+                ></span>
+              </div>
             </button>
           </div>
           <div
@@ -537,44 +553,48 @@ const Navbar = () => {
                 {isFocused && (
                   <div className="absolute llg:hidden   top-full z-[9999] mt-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-200 dark:scrollbar-thumb-purple-500 dark:scrollbar-track-gray-700 transition-all duration-300 ease-in-out hover:shadow-2xl">
                     {filteredArticles.length > 0 ? (
-                      filteredArticles.filter((article) => {
-                        const publishedAt = new Date(article.publishedAt);
-                        return (
-                          article.status === "published" && publishedAt < currentTime
-                        );
-                      }).slice(0, 10).map((article, idx) => (
-                        <Link
-                          href={`/blogs/${article.slug}`}
-                          key={idx}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
-                          passHref
-                        >
-                          <img
-                            alt={article.title}
-                            src={
-                              article.thumbnail ||
-                              "https://via.placeholder.com/50"
-                            }
-                            width="50"
-                            height="50"
-                            className="w-12 h-12 rounded-md object-cover shadow-md"
-                            loading="lazy"
-                            onError={() =>
-                              console.error(
-                                "Image failed to load:",
-                                article.thumbnail
-                              )
-                            }
-                          />
+                      filteredArticles
+                        .filter((article) => {
+                          const publishedAt = new Date(article.publishedAt);
+                          return (
+                            article.status === "published" &&
+                            publishedAt < currentTime
+                          );
+                        })
+                        .slice(0, 10)
+                        .map((article, idx) => (
+                          <Link
+                            href={`/blogs/${article.slug}`}
+                            key={idx}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-all duration-200"
+                            passHref
+                          >
+                            <img
+                              alt={article.title}
+                              src={
+                                article.thumbnail ||
+                                "https://via.placeholder.com/50"
+                              }
+                              width="50"
+                              height="50"
+                              className="w-12 h-12 rounded-md object-cover shadow-md"
+                              loading="lazy"
+                              onError={() =>
+                                console.error(
+                                  "Image failed to load:",
+                                  article.thumbnail
+                                )
+                              }
+                            />
 
-                          <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
-                            {article.title}
-                          </p>
-                        </Link>
-                      ))
+                            <p className="ml-4 text-sm font-medium text-gray-900 dark:text-gray-200">
+                              {article.title}
+                            </p>
+                          </Link>
+                        ))
                     ) : (
                       <p className="p-3 text-center text-gray-600 dark:text-gray-400">
                         No results found.
@@ -627,66 +647,73 @@ const Navbar = () => {
 
                 {/* Dropdown */}
                 {isBlogDropdownOpen && (
-  <div
-    className="absolute hidden md:block left-0 z-50 w-[48rem] bg-white/20 dark:bg-gray-900/20 
+                  <div
+                    className="absolute hidden md:block left-0 z-50 w-[48rem] bg-white/20 dark:bg-gray-900/20 
     backdrop-blur-lg rounded-2xl border border-gray-300 dark:border-gray-700 
     shadow-[0_4px_30px_rgba(0,0,0,0.3)] transition-all duration-300 
     animate-fadeIn p-4"
-  >
-    <ul className="grid grid-cols-2 md:grid-cols-5 gap-2 text-md font-medium text-gray-900 dark:text-gray-200">
-      {[
-        { name: "Cardiology", desc: "Heart" },
-        { name: "Orthopedics", desc: "Bones & Joints" },
-        { name: "Gastroenterology", desc: "Digestive System" },
-        { name: "Pediatrics", desc: "Children's Health" },
-        { name: "Gynecology", desc: "Women's Health" },
-        { name: "Urology", desc: "Urinary System" },
-        { name: "Pulmonology", desc: "Respiratory System" },
-        { name: "Ophthalmology", desc: "Eyes" },
-        { name: "ENT", desc: "Ear, Nose & Throat" },
-        { name: "Nephrology", desc: "Kidneys" },
-        { name: "Endocrinology", desc: "Hormones" },
-        { name: "Rheumatology", desc: "Autoimmune Diseases" },
-        { name: "Nutrition & Diet", desc: "Healthy Eating and Nutrition" },
-        { name: "Mental Health", desc: "Emotional and Psychological Well-being" },
-        { name: "New Mom Tips", desc: "Guidance for New Mothers" },
-        { name: "Lifestyle", desc: "Health and Daily Living" },
-        { name: "Dermatology", desc: "Skin and Hair Health" },
-        { name: "Oncology", desc: "Cancer Care and Treatment" },
-        { name: "Fertility Health", desc: "Reproductive Wellness" },
-      ].map(({ name, desc }) => (
-        <li key={name}>
-          <Link
-            href={`/blogs/categories/${name
-              .toLowerCase()
-              .replace(/\s+/g, '-')
-              .replace(/&/g, 'and')}`} // Replace & with 'and'
-            className="block p-3 rounded-2xl transition-all duration-300 
+                  >
+                    <ul className="grid grid-cols-2 md:grid-cols-5 gap-2 text-md font-medium text-gray-900 dark:text-gray-200">
+                      {[
+                        { name: "Cardiology", desc: "Heart" },
+                        { name: "Orthopedics", desc: "Bones & Joints" },
+                        { name: "Gastroenterology", desc: "Digestive System" },
+                        { name: "Pediatrics", desc: "Children's Health" },
+                        { name: "Gynecology", desc: "Women's Health" },
+                        { name: "Urology", desc: "Urinary System" },
+                        { name: "Pulmonology", desc: "Respiratory System" },
+                        { name: "Ophthalmology", desc: "Eyes" },
+                        { name: "ENT", desc: "Ear, Nose & Throat" },
+                        { name: "Nephrology", desc: "Kidneys" },
+                        { name: "Endocrinology", desc: "Hormones" },
+                        { name: "Rheumatology", desc: "Autoimmune Diseases" },
+                        {
+                          name: "Nutrition & Diet",
+                          desc: "Healthy Eating and Nutrition",
+                        },
+                        {
+                          name: "Mental Health",
+                          desc: "Emotional and Psychological Well-being",
+                        },
+                        {
+                          name: "New Mom Tips",
+                          desc: "Guidance for New Mothers",
+                        },
+                        { name: "Lifestyle", desc: "Health and Daily Living" },
+                        { name: "Dermatology", desc: "Skin and Hair Health" },
+                        { name: "Oncology", desc: "Cancer Care and Treatment" },
+                        {
+                          name: "Fertility Health",
+                          desc: "Reproductive Wellness",
+                        },
+                      ].map(({ name, desc }) => (
+                        <li key={name}>
+                          <Link
+                            href={`/blogs/categories/${name
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")
+                              .replace(/&/g, "and")}`} // Replace & with 'and'
+                            className="block p-3 rounded-2xl transition-all duration-300 
               shadow-md bg-white/10 dark:bg-gray-800/10 backdrop-blur-md 
               hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r 
               hover:from-blue-500 hover:via-purple-600 hover:to-pink-500 
               dark:hover:from-gray-700 dark:hover:via-gray-800 dark:hover:to-gray-900 
               hover:text-white dark:hover:text-gray-100"
-          >
-            <span className="font-semibold block break-words">
-              {name}
-            </span>
-            {desc && (
-              <span className="block text-xs text-gray-600 dark:text-gray-400 break-words">
-                {desc}
-              </span>
-            )}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </div>
-)}
-
-
-
-
-
+                          >
+                            <span className="font-semibold block break-words">
+                              {name}
+                            </span>
+                            {desc && (
+                              <span className="block text-xs text-gray-600 dark:text-gray-400 break-words">
+                                {desc}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
 
               {/* Dropdown appended after "Blogs" (For small screens) */}
@@ -828,6 +855,21 @@ const Navbar = () => {
                         onClick={toggleNav}
                       >
                         Notifications
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/admin/chats"
+                        className={`md:hidden block py-3 px-4 text-xl font-semibold rounded-md transition-all duration-300 
+            ${
+              pathname === "/earnings"
+                ? "text-blue-600 dark:text-blue-400 border-2 border-blue-600 dark:border-blue-400 md:shadow-xl dark:md:shadow-blue-600/50"
+                : "text-gray-800 dark:text-gray-200"
+            } 
+          `}
+                        onClick={toggleNav}
+                      >
+                        Chats
                       </Link>
                     </li>
                   </>

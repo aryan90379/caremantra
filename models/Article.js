@@ -87,7 +87,8 @@ const ArticleSchema = new Schema(
         "Lifestyle",
         "Dermatology",
         "Oncology",
-        "Fertility Health"
+        "Fertility Health",
+        "Uncategorized"
       ],
       default: "Uncategorized",
     },
